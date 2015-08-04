@@ -66,23 +66,25 @@ namespace EasyHttp.Codecs
 
 	public class DynamicType: DynamicObject
     {
-        readonly Dictionary<string, object> _properties = new Dictionary<string, object>();
+        readonly Dictionary<string, object> properties = new Dictionary<string, object>();
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
 	        var binderName = binder.Name.ToLower(CultureInfo.InvariantCulture);
 	        object value;
 
-	        if (!_properties.TryGetValue(binderName, out value)) 
-				 throw new PropertyNotFoundException(binder.Name);
-
+            if (!this.properties.TryGetValue(binderName, out value))
+            {
+                throw new PropertyNotFoundException(nameof(binder.Name));
+            }
+				 
 	        result = value;
 	        return true;
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
-            _properties[binder.Name.ToLower(CultureInfo.InvariantCulture)] = value;
+            this.properties[binder.Name.ToLower(CultureInfo.InvariantCulture)] = value;
             return true;
         }
 

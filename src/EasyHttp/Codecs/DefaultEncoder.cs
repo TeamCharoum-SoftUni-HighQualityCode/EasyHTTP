@@ -64,22 +64,22 @@ namespace EasyHttp.Codecs
 {
     public class DefaultEncoder : IEncoder
     {
-        readonly IDataWriterProvider _dataWriterProvider;
+        readonly IDataWriterProvider dataWriterProvider;
 
         public DefaultEncoder(IDataWriterProvider dataWriterProvider)
         {
-            _dataWriterProvider = dataWriterProvider;
+            this.dataWriterProvider = dataWriterProvider;
         }
 
         public byte[] Encode(object input, string contentType)
         {
       
-            if (input.GetType() == typeof(string))
+            if (input is string)
             {
                 return Encoding.UTF8.GetBytes((string)input);
             }
 
-            var serializer = _dataWriterProvider.Find(contentType, contentType);
+            var serializer = this.dataWriterProvider.Find(contentType, contentType);
 
 
             if (serializer == null)
