@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1E909D
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Http.Client", "Http.Client\Http.Client.csproj", "{52437064-BC4E-4372-ACDD-41CF351364C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,16 @@ Global
 		{6F950A41-727E-4416-8D5B-809946DD2836}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6F950A41-727E-4416-8D5B-809946DD2836}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6F950A41-727E-4416-8D5B-809946DD2836}.Release|x86.ActiveCfg = Release|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{52437064-BC4E-4372-ACDD-41CF351364C6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

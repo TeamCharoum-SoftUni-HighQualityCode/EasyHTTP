@@ -50,8 +50,6 @@ namespace EasyHttp.Http
     {
         private readonly IEncoder encoder;
         private HttpRequestCachePolicy cachePolicy;
-
-
         private HttpWebRequest httpWebRequest;
         private CookieContainer cookieContainer;
 
@@ -112,7 +110,45 @@ namespace EasyHttp.Http
             this.Password = password;
         }
 
-        void SetupHeader()
+        public void AddExtraHeader(string header, object value)
+        {
+            if (value != null && !this.RawHeaders.ContainsKey(header))
+            {
+                this.RawHeaders.Add(header, value);
+            }
+        }
+
+        public HttpWebRequest PrepareRequest()
+        {
+            this.httpWebRequest = (HttpWebRequest)WebRequest.Create(this.Uri);
+            this.httpWebRequest.AllowAutoRedirect = this.AllowAutoRedirect;
+            this.SetupHeader();
+            this.SetupBody();
+
+            return this.httpWebRequest;
+        }
+
+        public void SetCacheControlToNoCache()
+        {
+            this.cachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+        }
+
+        public void SetCacheControlWithMaxAge(TimeSpan maxAge)
+        {
+            this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, maxAge);
+        }
+
+        public void SetCacheControlWithMaxAgeAndMaxStale(TimeSpan maxAge, TimeSpan maxStale)
+        {
+            this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMaxStale, maxAge, maxStale);
+        }
+
+        public void SetCacheControlWithMaxAgeAndMinFresh(TimeSpan maxAge, TimeSpan minFresh)
+        {
+            this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMinFresh, maxAge, minFresh);
+        }
+
+        private void SetupHeader()
         {
             if (!this.PersistCookies || this.cookieContainer == null)
             {
@@ -137,7 +173,6 @@ namespace EasyHttp.Http
                 this.httpWebRequest.Timeout = this.Timeout;
             }
 
-
             if (this.Cookies != null)
             {
                 this.httpWebRequest.CookieContainer.Add(this.Cookies);
@@ -147,7 +182,6 @@ namespace EasyHttp.Http
             {
                 this.httpWebRequest.IfModifiedSince = this.IfModifiedSince;
             }
-
 
             if (this.Date != DateTime.MinValue)
             {
@@ -170,7 +204,6 @@ namespace EasyHttp.Http
             }
 
             this.SetupAuthentication();
-
             this.AddExtraHeader("From", this.From);
             this.AddExtraHeader("Accept-CharSet", this.AcceptCharSet);
             this.AddExtraHeader("Accept-Encoding", this.AcceptEncoding);
@@ -182,22 +215,40 @@ namespace EasyHttp.Http
             {
                 this.httpWebRequest.Headers.Add(String.Format("{0}: {1}", header.Key, header.Value));
             }
-        }
 
+        }
+        //TODO или да се маха или да се вкара някаква логика
         private bool AcceptAllCertifications(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
         {
             return true;
         }
 
-        public void AddExtraHeader(string header, object value)
+        private void SetupClientCertificates()
         {
-            if (value != null && !this.RawHeaders.ContainsKey(header))
+            if (this.ClientCertificates == null || this.ClientCertificates.Count == 0)
+                return;
+
+            this.httpWebRequest.ClientCertificates.AddRange(this.ClientCertificates);
+        }
+
+        private void SetupAuthentication()
+        {
+            this.SetupClientCertificates();
+
+            if (this.ForceBasicAuthentication)
             {
-                this.RawHeaders.Add(header, value);
+                string authInfo = this.Username + ":" + this.Password;
+                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                this.httpWebRequest.Headers["Authorization"] = "Basic " + authInfo;
+            }
+            else
+            {
+                var networkCredential = new NetworkCredential(this.Username, this.Password);
+                this.httpWebRequest.Credentials = networkCredential;
             }
         }
 
-        void SetupBody()
+        private void SetupBody()
         {
             if (this.Data != null)
             {
@@ -218,7 +269,7 @@ namespace EasyHttp.Http
             }
         }
 
-        void SetupData()
+        private void SetupData()
         {
             var bytes = this.encoder.Encode(this.Data, this.ContentType);
 
@@ -228,13 +279,11 @@ namespace EasyHttp.Http
             }
 
             var requestStream = this.httpWebRequest.GetRequestStream();
-
             requestStream.Write(bytes, 0, bytes.Length);
-
             requestStream.Close();
         }
 
-        void SetupPutFilename()
+        private void SetupPutFilename()
         {
             using (var fileStream = new FileStream(this.PutFilename, FileMode.Open))
             {
@@ -255,9 +304,7 @@ namespace EasyHttp.Http
             }
         }
 
-
-
-        void SetupMultiPartBody()
+        private void SetupMultiPartBody()
         {
             var multiPartStreamer = new MultiPartStreamer(this.MultiPartFormData, this.MultiPartFileData);
 
@@ -270,7 +317,6 @@ namespace EasyHttp.Http
             }
 
             multiPartStreamer.StreamMultiPart(this.httpWebRequest.GetRequestStream());
-
         }
 
 
