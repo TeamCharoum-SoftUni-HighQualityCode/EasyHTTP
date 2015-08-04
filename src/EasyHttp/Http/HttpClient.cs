@@ -104,39 +104,39 @@ namespace EasyHttp.Http
 
         public HttpResponse GetAsFile(string uri, string filename)
         {
-            this.InitRequest(uri, HttpMethod.GET, null);
+            this.InitRequest(uri, HttpMethodType.Get, null);
             return this.ProcessRequest(filename);
         }
 
         public HttpResponse Get(string uri, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.GET, query);
+            this.InitRequest(uri, HttpMethodType.Get, query);
             return this.ProcessRequest();
         }
 
         public HttpResponse Options(string uri)
         {
-            this.InitRequest(uri, HttpMethod.OPTIONS, null);
+            this.InitRequest(uri, HttpMethodType.Options, null);
             return this.ProcessRequest();
         }
 
         public HttpResponse Post(string uri, object data, string contentType, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.POST, query);
+            this.InitRequest(uri, HttpMethodType.Post, query);
             this.InitData(data, contentType);
             return this.ProcessRequest();
         }
 
         public HttpResponse Patch(string uri, object data, string contentType, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.PATCH, query);
+            this.InitRequest(uri, HttpMethodType.Patch, query);
             this.InitData(data, contentType);
             return this.ProcessRequest();
         }
 
         public HttpResponse Post(string uri, IDictionary<string, object> formData, IList<FileData> files, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.POST, query);
+            this.InitRequest(uri, HttpMethodType.Post, query);
             this.Request.MultiPartFormData = formData;
             this.Request.MultiPartFileData = files;
             this.Request.KeepAlive = true;
@@ -145,26 +145,26 @@ namespace EasyHttp.Http
 
         public HttpResponse Put(string uri, object data, string contentType, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.PUT, query);
+            this.InitRequest(uri, HttpMethodType.Put, query);
             this.InitData(data, contentType);
             return this.ProcessRequest();
         }
 
         public HttpResponse Delete(string uri, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.DELETE, query);
+            this.InitRequest(uri, HttpMethodType.Delete, query);
             return this.ProcessRequest();
         }
 
         public HttpResponse Head(string uri, object query = null)
         {
-            this.InitRequest(uri, HttpMethod.HEAD, query);
+            this.InitRequest(uri, HttpMethodType.Head, query);
             return this.ProcessRequest();
         }
 
         public HttpResponse PutFile(string uri, string filename, string contentType)
         {
-            this.InitRequest(uri, HttpMethod.PUT, null);
+            this.InitRequest(uri, HttpMethodType.Put, null);
             this.Request.ContentType = contentType;
             this.Request.PutFilename = filename;
             this.Request.Expect = true;
@@ -182,7 +182,7 @@ namespace EasyHttp.Http
             this.Request.ClientCertificates.AddRange(certificates);
         }
 
-        private void InitRequest(string uri, HttpMethod method, object query)
+        private void InitRequest(string uri, HttpMethodType method, object query)
         {
             this.Request.Uri = this.uriComposer.Compose(this.baseUri, uri, query, this.Request.ParametersAsSegments);
             this.Request.Data = null;

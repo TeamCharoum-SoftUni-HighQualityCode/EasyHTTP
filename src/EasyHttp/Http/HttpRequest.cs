@@ -96,7 +96,7 @@ namespace EasyHttp.Http
         public int Range { get; set; }
         public string UserAgent { get; set; }
         public IDictionary<string, object> RawHeaders { get; private set; }
-        public HttpMethod Method { get; set; }
+        public HttpMethodType Method { get; set; }
         public object Data { get; set; }
         public string Uri { get; set; }
         public string PutFilename { get; set; }

@@ -57,14 +57,14 @@
 #endregion
 namespace EasyHttp.Http
 {
-    public enum HttpMethod
+    public enum HttpMethodType
     {
-        HEAD,
-        GET,
-        POST,
-        PUT,
-        DELETE,
-        OPTIONS,
-        PATCH
+        Head,
+        Get,
+        Post,
+        Put,
+        Delete,
+        Options,
+        Patch
     }
 }
