@@ -7,11 +7,11 @@ namespace EasyHttp.Codecs
 {
     public class DefaultDecoder: IDecoder
     {
-        readonly IDataReaderProvider _dataReaderProvider;
+        readonly IDataReaderProvider DataReaderProvider;
 
         public DefaultDecoder(IDataReaderProvider dataReaderProvider)
         {
-            _dataReaderProvider = dataReaderProvider;
+            this.DataReaderProvider = dataReaderProvider;
         }
 
         public T DecodeToStatic<T>(string input, string contentType)
@@ -19,7 +19,7 @@ namespace EasyHttp.Codecs
 
             var parsedText = NormalizeInputRemovingAmpersands(input);
 
-            var deserializer = ObtainDeserializer(contentType);
+            var deserializer = this.ObtainDeserializer(contentType);
 
             return deserializer.Read<T>(parsedText);
 
@@ -29,14 +29,14 @@ namespace EasyHttp.Codecs
         {
             var parsedText = NormalizeInputRemovingAmpersands(input);
 
-            var deserializer = ObtainDeserializer(contentType);
+            var deserializer = this.ObtainDeserializer(contentType);
        
             return deserializer.Read(parsedText);
         }
 
         IDataReader ObtainDeserializer(string contentType)
         {
-            var deserializer = _dataReaderProvider.Find(contentType);
+            var deserializer = this.DataReaderProvider.Find(contentType);
 
 
             if (deserializer == null)
@@ -53,7 +53,6 @@ namespace EasyHttp.Codecs
                 throw new ArgumentNullException("input");
             }
 
-            // this is a hack 
             var parsedText = input.Replace("\"@", "\"");
             return parsedText;
         }
