@@ -55,175 +55,176 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using EasyHttp.Codecs;
-using EasyHttp.Configuration;
-using EasyHttp.Infrastructure;
-
 namespace EasyHttp.Http
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Security.Cryptography.X509Certificates;
+
+    using EasyHttp.Codecs;
+    using EasyHttp.Configuration;
+    using EasyHttp.Infrastructure;
+
     public class HttpClient
     {
-        readonly string _baseUri;
-        readonly IEncoder _encoder;
-        readonly IDecoder _decoder;
-        readonly UriComposer _uriComposer;
-        
-        public bool LoggingEnabled { get; set; }
-        public bool ThrowExceptionOnHttpError { get; set; }
-        public bool StreamResponse { get; set; }
-      
+        private readonly string baseUri;
+        private readonly IEncoder encoder;
+        private readonly IDecoder decoder;
+        private readonly UriComposer uriComposer;
 
-        public HttpClient():this(new DefaultEncoderDecoderConfiguration())
+        public HttpClient()
+            : this(new DefaultEncoderDecoderConfiguration())
         {
-
         }
-      
+
+        public HttpClient(string baseUri)
+            : this(new DefaultEncoderDecoderConfiguration())
+        {
+            this.baseUri = baseUri;
+        }
 
         public HttpClient(IEncoderDecoderConfiguration encoderDecoderConfiguration)
         {
-            _encoder = encoderDecoderConfiguration.GetEncoder();
-            _decoder = encoderDecoderConfiguration.GetDecoder();
-            _uriComposer = new UriComposer();
-            
-            Request = new HttpRequest(_encoder);
-        }
+            this.encoder = encoderDecoderConfiguration.GetEncoder();
+            this.decoder = encoderDecoderConfiguration.GetDecoder();
+            this.uriComposer = new UriComposer();
 
-        public HttpClient(string baseUri): this(new DefaultEncoderDecoderConfiguration())
-        {
-            _baseUri = baseUri;
+            this.Request = new HttpRequest(this.encoder);
         }
 
         public HttpResponse Response { get; private set; }
+
         public HttpRequest Request { get; private set; }
 
-        void InitRequest(string uri, HttpMethod method, object query)
-        {
-            Request.Uri = _uriComposer.Compose(_baseUri, uri, query, Request.ParametersAsSegments);
-            Request.Data = null;
-            Request.PutFilename = String.Empty;
-            Request.Expect = false;
-            Request.KeepAlive = true;
-            Request.MultiPartFormData = null;
-            Request.MultiPartFileData = null;
-            Request.ContentEncoding = null;
-            Request.Method = method;
-        }
+        public bool IsLoggingEnabled { get; set; }
 
+        public bool HasThrowExceptionOnHttpError { get; set; }
+
+        public bool StreamResponse { get; set; }
 
         public HttpResponse GetAsFile(string uri, string filename)
         {
-            InitRequest(uri, HttpMethod.GET, null);
-            return ProcessRequest(filename);
+            this.InitRequest(uri, HttpMethod.GET, null);
+            return this.ProcessRequest(filename);
         }
 
         public HttpResponse Get(string uri, object query = null)
         {
-            InitRequest(uri, HttpMethod.GET, query);
-            return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.GET, query);
+            return this.ProcessRequest();
         }
 
         public HttpResponse Options(string uri)
         {
-            InitRequest(uri, HttpMethod.OPTIONS, null);
-            return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.OPTIONS, null);
+            return this.ProcessRequest();
         }
 
         public HttpResponse Post(string uri, object data, string contentType, object query = null)
         {
-            return null;
-            //InitRequest(uri, HttpMethod.POST, query);
-            //InitData(data, contentType);
-            //return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.POST, query);
+            this.InitData(data, contentType);
+            return this.ProcessRequest();
         }
 
         public HttpResponse Patch(string uri, object data, string contentType, object query = null)
         {
-            InitRequest(uri, HttpMethod.PATCH, query);
-            InitData(data, contentType);
-            return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.PATCH, query);
+            this.InitData(data, contentType);
+            return this.ProcessRequest();
         }
 
         public HttpResponse Post(string uri, IDictionary<string, object> formData, IList<FileData> files, object query = null)
         {
-            InitRequest(uri, HttpMethod.POST, query);
-            Request.MultiPartFormData = formData;
-            Request.MultiPartFileData = files;
-            Request.KeepAlive = true;
-            return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.POST, query);
+            this.Request.MultiPartFormData = formData;
+            this.Request.MultiPartFileData = files;
+            this.Request.KeepAlive = true;
+            return this.ProcessRequest();
         }
 
         public HttpResponse Put(string uri, object data, string contentType, object query = null)
         {
-            InitRequest(uri, HttpMethod.PUT, query);
-            InitData(data, contentType);
-            return ProcessRequest();
-        }
-
-        void InitData(object data, string contentType)
-        {
-            if (data != null)
-            {
-                Request.ContentType = contentType;
-                Request.Data = data;
-            }
+            this.InitRequest(uri, HttpMethod.PUT, query);
+            this.InitData(data, contentType);
+            return this.ProcessRequest();
         }
 
         public HttpResponse Delete(string uri, object query = null)
         {
-            InitRequest(uri, HttpMethod.DELETE, query);
-            return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.DELETE, query);
+            return this.ProcessRequest();
         }
 
- 
         public HttpResponse Head(string uri, object query = null)
         {
-            InitRequest(uri, HttpMethod.HEAD, query);
-            return ProcessRequest();
+            this.InitRequest(uri, HttpMethod.HEAD, query);
+            return this.ProcessRequest();
         }
 
         public HttpResponse PutFile(string uri, string filename, string contentType)
         {
-            InitRequest(uri, HttpMethod.PUT, null);
-            Request.ContentType = contentType;
-            Request.PutFilename = filename;
-            Request.Expect = true;
-            Request.KeepAlive = true;
-            return ProcessRequest();
-        }
-
-        HttpResponse ProcessRequest(string filename = "")
-        {
-            var httpWebRequest = Request.PrepareRequest();
-
-            Response = new HttpResponse(_decoder);
-
-            Response.GetResponse(httpWebRequest, filename, StreamResponse);
-            
-            if (ThrowExceptionOnHttpError && IsHttpError())
-            {
-                throw new HttpException(Response.StatusCode, Response.StatusDescription);
-            }
-            return Response;
+            this.InitRequest(uri, HttpMethod.PUT, null);
+            this.Request.ContentType = contentType;
+            this.Request.PutFilename = filename;
+            this.Request.Expect = true;
+            this.Request.KeepAlive = true;
+            return this.ProcessRequest();
         }
 
         public void AddClientCertificates(X509CertificateCollection certificates)
         {
-            if(certificates == null || certificates.Count == 0)
-                return;
+            if (certificates == null || certificates.Count == 0)
+            {
+                throw new ArgumentNullException("The certifacate's collection is empty!");
+            }
 
-            Request.ClientCertificates.AddRange(certificates);
+            this.Request.ClientCertificates.AddRange(certificates);
         }
 
-        bool IsHttpError()
+        private void InitRequest(string uri, HttpMethod method, object query)
         {
-            var num = (int) Response.StatusCode / 100;
-
-            return (num == 4 || num == 5);
+            this.Request.Uri = this.uriComposer.Compose(this.baseUri, uri, query, this.Request.ParametersAsSegments);
+            this.Request.Data = null;
+            this.Request.PutFilename = string.Empty;
+            this.Request.Expect = false;
+            this.Request.KeepAlive = true;
+            this.Request.MultiPartFormData = null;
+            this.Request.MultiPartFileData = null;
+            this.Request.ContentEncoding = null;
+            this.Request.Method = method;
         }
 
+        private void InitData(object data, string contentType)
+        {
+            if (data != null)
+            {
+                this.Request.ContentType = contentType;
+                this.Request.Data = data;
+            }
+        }
+
+        private HttpResponse ProcessRequest(string filename = "")
+        {
+            var httpWebRequest = this.Request.PrepareRequest();
+
+            this.Response = new HttpResponse(this.decoder);
+
+            this.Response.GetResponse(httpWebRequest, filename, this.StreamResponse);
+
+            if (this.HasThrowExceptionOnHttpError && this.IsHttpError())
+            {
+                throw new HttpException(this.Response.StatusCode, this.Response.StatusDescription);
+            }
+
+            return this.Response;
+        }
+
+        private bool IsHttpError()
+        {
+            var num = (int)this.Response.StatusCode / 100;
+
+            return num == 4 || num == 5;
+        }
     }
 }

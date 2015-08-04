@@ -56,8 +56,6 @@
 // THE SOFTWARE.
 #endregion
 
-using System;
-
 namespace EasyHttp.Http
 {
     public static class HttpContentTypes
