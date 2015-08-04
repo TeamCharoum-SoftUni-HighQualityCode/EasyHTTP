@@ -1,10 +1,9 @@
-﻿using System;
-using System.IO;
-using JsonFx.Serialization;
-using JsonFx.Serialization.Providers;
-
-namespace EasyHttp.Codecs
+﻿namespace EasyHttp.Codecs
 {
+    using System;
+    using JsonFx.Serialization;
+    using JsonFx.Serialization.Providers;
+
     public class DefaultDecoder : IDecoder
     {
         private readonly IDataReaderProvider dataReaderProvider;
@@ -16,13 +15,10 @@ namespace EasyHttp.Codecs
 
         public T DecodeToStatic<T>(string input, string contentType)
         {
-
             var parsedText = NormalizeInputRemovingAmpersands(input);
-
             var deserializer = this.ObtainDeserializer(contentType);
 
             return deserializer.Read<T>(parsedText);
-
         }
 
         public dynamic DecodeToDynamic(string input, string contentType)
@@ -49,14 +45,12 @@ namespace EasyHttp.Codecs
         {
             var deserializer = this.dataReaderProvider.Find(contentType);
 
-
             if (deserializer == null)
             {
                 throw new SerializationException("The encoding requested does not have a corresponding decoder");
             }
+
             return deserializer;
         }
-
-        
     }
 }
