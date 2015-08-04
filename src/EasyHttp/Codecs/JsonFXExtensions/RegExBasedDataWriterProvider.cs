@@ -66,12 +66,17 @@ using JsonFx.Serialization.Providers;
 
 namespace EasyHttp.Codecs.JsonFXExtensions
 {
-    // TODO: This is a copy of the DataWriterProvider in JsonFX. Need to clean it up and move things elsewhere
-    public class RegExBasedDataWriterProvider: IDataWriterProvider
-    {
-    	readonly IDataWriter _defaultWriter;
-		readonly IDictionary<string, IDataWriter> _writersByExt = new Dictionary<string, IDataWriter>(StringComparer.OrdinalIgnoreCase);
-		readonly IDictionary<string, IDataWriter> _writersByMime = new Dictionary<string, IDataWriter>(StringComparer.OrdinalIgnoreCase);
+	// TODO: This is a copy of the DataWriterProvider in JsonFX. 
+	// Need to clean it up and move things elsewhere
+	public class RegExBasedDataWriterProvider: IDataWriterProvider
+	{
+		private readonly IDataWriter defaultWriter;
+		
+		private readonly IDictionary<string, IDataWriter> writersByExt = 
+			new Dictionary<string, IDataWriter>(StringComparer.OrdinalIgnoreCase);
+		
+		private readonly IDictionary<string, IDataWriter> writersByMime = 
+			new Dictionary<string, IDataWriter>(StringComparer.OrdinalIgnoreCase);
 
 		
 		public RegExBasedDataWriterProvider(IEnumerable<IDataWriter> writers)
@@ -80,35 +85,35 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 			{
 				foreach (IDataWriter writer in writers)
 				{
-					if (_defaultWriter == null)
+					if (this.defaultWriter == null)
 					{
 						// TODO: decide less arbitrary way to choose default
 						// without hardcoding value into IDataWriter.
 						// Currently first DataWriter wins default.
-						_defaultWriter = writer;
+						this.defaultWriter = writer;
 					}
 
 					foreach (string contentType in writer.ContentType)
 					{
 						if (String.IsNullOrEmpty(contentType) ||
-							_writersByMime.ContainsKey(contentType))
+							this.writersByMime.ContainsKey(contentType))
 						{
 							continue;
 						}
 
-						_writersByMime[contentType] = writer;
+						this.writersByMime[contentType] = writer;
 					}
 
 					foreach (string fileExt in writer.FileExtension)
 					{
 						if (String.IsNullOrEmpty(fileExt) ||
-							_writersByExt.ContainsKey(fileExt))
+							this.writersByExt.ContainsKey(fileExt))
 						{
 							continue;
 						}
 
 						string ext = NormalizeExtension(fileExt);
-						_writersByExt[ext] = writer;
+						this.writersByExt[ext] = writer;
 					}
 				}
 			}
@@ -117,7 +122,10 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 
 		public IDataWriter DefaultDataWriter
 		{
-			get { return _defaultWriter; }
+		    get
+		    {
+		        return this.defaultWriter;
+		    }
 		}
 
 
@@ -126,7 +134,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 			extension = NormalizeExtension(extension);
 
 			IDataWriter writer;
-			if (_writersByExt.TryGetValue(extension, out writer))
+			if (this.writersByExt.TryGetValue(extension, out writer))
 			{
 				return writer;
 			}
@@ -136,21 +144,19 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 
 		public IDataWriter Find(string acceptHeader, string contentTypeHeader)
 		{
-		    foreach (string type in ParseHeaders(acceptHeader, contentTypeHeader))
+			foreach (string type in ParseHeaders(acceptHeader, contentTypeHeader))
 			{
-                var readers = from writer in _writersByMime
-                                    where Regex.Match(type, writer.Key, RegexOptions.Singleline).Success
-                                    select writer;
+				var readers = from writer in this.writersByMime
+								where Regex.Match(type, writer.Key, RegexOptions.Singleline).Success
+								select writer;
 
-                if (readers.Count() > 0)
-                {
-                    return readers.First().Value;
-                }
-            }
-            return null;
-
+				if (readers.Count() > 0)
+				{
+					return readers.First().Value;
+				}
+			}
+			return null;
 		}
-
 
 		public static IEnumerable<string> ParseHeaders(string accept, string contentType)
 		{
@@ -208,7 +214,5 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 			// ensure is only extension with leading dot
 			return Path.GetExtension(extension);
 		}
-
-
-    }
+	}
 }
