@@ -21,8 +21,7 @@ namespace EasyHttp.Infrastructure
                 var paramsList = properties.Select(BuildParam).ToList();
                 if (paramsList.Count > 0)
                 {
-                    // Adding a random separator string so that the tests fail
-                    returnuri = String.Format("{0}{1}", PathStartCharacter, String.Join(PathSeparatorCharacter + "|", paramsList));
+                    returnuri = String.Format("{0}{1}", PathStartCharacter, String.Join(PathSeparatorCharacter, paramsList));
                 }
             }
             return returnuri;
