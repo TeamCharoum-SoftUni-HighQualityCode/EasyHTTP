@@ -5,13 +5,13 @@ using JsonFx.Serialization.Providers;
 
 namespace EasyHttp.Codecs
 {
-    public class DefaultDecoder: IDecoder
+    public class DefaultDecoder : IDecoder
     {
-        readonly IDataReaderProvider DataReaderProvider;
+        private readonly IDataReaderProvider dataReaderProvider;
 
         public DefaultDecoder(IDataReaderProvider dataReaderProvider)
         {
-            this.DataReaderProvider = dataReaderProvider;
+            this.dataReaderProvider = dataReaderProvider;
         }
 
         public T DecodeToStatic<T>(string input, string contentType)
@@ -30,13 +30,13 @@ namespace EasyHttp.Codecs
             var parsedText = NormalizeInputRemovingAmpersands(input);
 
             var deserializer = this.ObtainDeserializer(contentType);
-       
+
             return deserializer.Read(parsedText);
         }
 
-        IDataReader ObtainDeserializer(string contentType)
+        private IDataReader ObtainDeserializer(string contentType)
         {
-            var deserializer = this.DataReaderProvider.Find(contentType);
+            var deserializer = this.dataReaderProvider.Find(contentType);
 
 
             if (deserializer == null)
@@ -46,11 +46,11 @@ namespace EasyHttp.Codecs
             return deserializer;
         }
 
-		  static string NormalizeInputRemovingAmpersands(string input)
+        private static string NormalizeInputRemovingAmpersands(string input)
         {
             if (string.IsNullOrEmpty(input))
             {
-                throw new ArgumentNullException("input");
+                throw new ArgumentNullException(nameof(input), "Input can not be null or empty!");
             }
 
             var parsedText = input.Replace("\"@", "\"");
