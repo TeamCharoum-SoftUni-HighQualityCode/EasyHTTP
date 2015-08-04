@@ -55,30 +55,33 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
+
+using System.Text;
+using JsonFx.Serialization;
+using JsonFx.Serialization.Providers;
+
 namespace EasyHttp.Codecs
 {
-    using System.Text;
-    using JsonFx.Serialization;
-    using JsonFx.Serialization.Providers;
-
     public class DefaultEncoder : IEncoder
     {
-        private readonly IDataWriterProvider dataWriterProvider;
+        readonly IDataWriterProvider dataWriterProvider;
 
         public DefaultEncoder(IDataWriterProvider dataWriterProvider)
         {
             this.dataWriterProvider = dataWriterProvider;
         }
 
-        // ToDo method name should be changed
+        //ToDo method name should be changed
         public byte[] Encode(object input, string contentType)
         {
+      
             if (input is string)
             {
                 return Encoding.UTF8.GetBytes((string)input);
             }
 
             var serializer = this.dataWriterProvider.Find(contentType, contentType);
+
 
             if (serializer == null)
             {
@@ -89,5 +92,7 @@ namespace EasyHttp.Codecs
 
             return Encoding.UTF8.GetBytes(serialized);
         }
+
+       
     }
 }
