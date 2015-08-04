@@ -5,12 +5,18 @@
 
         protected override string PathStartCharacter
         {
-            get { return "/"; }
+            get
+            {
+                return "/";
+            }
         }
 
         protected override string PathSeparatorCharacter
         {
-            get { return "/"; }
+            get
+            {
+                return "/";
+            }
         }
 
         protected override string BuildParam(PropertyValue propertyValue)

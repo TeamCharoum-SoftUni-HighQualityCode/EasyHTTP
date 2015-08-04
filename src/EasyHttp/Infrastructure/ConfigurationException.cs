@@ -62,7 +62,7 @@ using System.Runtime.Serialization;
 namespace EasyHttp.Infrastructure
 {
 	 [Serializable]
-    public class ConfigurationException: Exception
+    public class ConfigurationException : Exception
     {
         public ConfigurationException()
         {

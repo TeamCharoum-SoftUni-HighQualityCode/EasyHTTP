@@ -6,7 +6,7 @@ namespace EasyHttp.Infrastructure
     {
         protected override string PathStartCharacter
         {
-            get { return "?"; }
+            get { return "?";}
         }
 
         protected override string PathSeparatorCharacter
@@ -16,7 +16,7 @@ namespace EasyHttp.Infrastructure
 
         protected override string BuildParam(PropertyValue propertyValue)
         {
-            return String.Join("=", propertyValue.Name, System.Web.HttpUtility.UrlEncode(propertyValue.Value));
+            return string.Join("=", propertyValue.Name, System.Web.HttpUtility.UrlEncode(propertyValue.Value));
         }
 
     }

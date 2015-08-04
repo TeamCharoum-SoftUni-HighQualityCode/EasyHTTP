@@ -8,45 +8,68 @@ namespace EasyHttp.Infrastructure
 {
     public abstract class ObjectToUrl
     {
-        protected abstract string PathStartCharacter { get; }
-        protected abstract string PathSeparatorCharacter { get; }
+        protected abstract string PathStartCharacter
+        {
+            get;
+        }
+
+        protected abstract string PathSeparatorCharacter
+        {
+            get;
+        }
+
         protected abstract string BuildParam(PropertyValue propertyValue);
 
         public string ParametersToUrl(object parameters)
         {
-            var returnuri = "";
+            var uri = "";
             var properties = GetProperties(parameters);
             if (parameters != null)
             {
-                var paramsList = properties.Select(BuildParam).ToList();
-                if (paramsList.Count > 0)
+                var paramsList = properties.Select(this.BuildParam).ToList();
+
+                if (paramsList.Count == 0)
                 {
-                    returnuri = String.Format("{0}{1}", PathStartCharacter, String.Join(PathSeparatorCharacter, paramsList));
+                    throw new Exception("The list of parameters is empty.");
                 }
+
+                uri = string.Format("{0}{1}", PathStartCharacter, String.Join(PathSeparatorCharacter, paramsList));
             }
-            return returnuri;
+            return uri;
         }
 
         private static IEnumerable<PropertyValue> GetProperties(object parameters)
         {
-            if (parameters == null) yield break;
+            if (parameters == null)
+            {
+                yield break;
+            }
+
             if (parameters is ExpandoObject)
             {
                 var dictionary = parameters as IDictionary<string, object>;
                 foreach (var property in dictionary)
                 {
-                    yield return new PropertyValue { Name = property.Key, Value = property.Value.ToString() };
+                    yield return new PropertyValue
+                    {
+                        Name = property.Key, Value = property.Value.ToString()
+                    };
                 }
             }
             else
             {
                 var properties = TypeDescriptor.GetProperties(parameters);
+
                 foreach (PropertyDescriptor propertyDescriptor in properties)
                 {
-                    var val = propertyDescriptor.GetValue(parameters);
-                    if (val != null)
+                    var value = propertyDescriptor.GetValue(parameters);
+
+                    if (value != null)
                     {
-                        yield return new PropertyValue { Name = propertyDescriptor.Name, Value = val.ToString() };
+                        yield return new PropertyValue
+                        {
+                            Name = propertyDescriptor.Name, Value = value.ToString()
+                        };
                     }
                 }
             }
