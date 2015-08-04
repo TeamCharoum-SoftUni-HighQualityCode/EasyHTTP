@@ -73,37 +73,81 @@ namespace EasyHttp.Configuration
     {
         public IEncoder GetEncoder()
         {
-            var jsonWriter = new JsonWriter(new DataWriterSettings(CombinedResolverStrategy()),
-                                            new[] {"application/.*json", "text/.*json"});
-            var xmlWriter = new XmlWriter(new DataWriterSettings(CombinedResolverStrategy()),
-                                          new[] {"application/xml", "text/.*xhtml", "text/xml", "text/html"});
+            var jsonWriter = new JsonWriter(new DataWriterSettings(
+                                    CombinedResolverStrategy()),
+                                    new[]
+                                        {
+                                            "application/.*json", 
+                                            "text/.*json"
+                                        });
+            
+            var xmlWriter = new XmlWriter(new DataWriterSettings(
+                                    CombinedResolverStrategy()),
+                                    new[]
+                                        {
+                                            "application/xml", 
+                                            "text/.*xhtml", 
+                                            "text/xml", 
+                                            "text/html"
+                                        });
 
-            var urlEncoderWriter = new UrlEncoderWriter(new DataWriterSettings(CombinedResolverStrategy()),
-                                                        new[] {"application/x-www-form-urlencoded"});
+            var urlEncoderWriter = new UrlEncoderWriter(new DataWriterSettings(
+                                    CombinedResolverStrategy()), 
+                                    new[]
+                                        {
+                                            "application/x-www-form-urlencoded"
+                                        });
 
-            var writers = new List<IDataWriter> { jsonWriter, xmlWriter, urlEncoderWriter };
+            var writers = new List<IDataWriter>
+                              {
+                                  jsonWriter, 
+                                  xmlWriter, 
+                                  urlEncoderWriter
+                              };
 
             var dataWriterProvider = new RegExBasedDataWriterProvider(writers);
-
-            return new DefaultEncoder(dataWriterProvider);
+            var resultingEncoder = new DefaultEncoder(dataWriterProvider);
+            
+            return resultingEncoder;
         }
 
         public IDecoder GetDecoder()
         {
-            var jsonReader = new JsonReader(new DataReaderSettings(CombinedResolverStrategy(), new Iso8601DateFilter()), new[] { "application/.*json", "text/.*json" });
-            var xmlReader = new XmlReader(new DataReaderSettings(CombinedResolverStrategy(), new Iso8601DateFilter()),
-                                          new[] {"application/.*xml", "text/.*xhtml", "text/xml", "text/html"});
+            var jsonReader = new JsonReader(new DataReaderSettings(
+                                CombinedResolverStrategy(), 
+                                new Iso8601DateFilter()), 
+                                new[]
+                                    {
+                                        "application/.*json", 
+                                        "text/.*json"
+                                    });
 
-            var readers = new List<IDataReader> {jsonReader, xmlReader};
+            var xmlReader = new XmlReader(new DataReaderSettings(
+                                CombinedResolverStrategy(), 
+                                new Iso8601DateFilter()),
+                                new[]
+                                    {
+                                        "application/.*xml", 
+                                        "text/.*xhtml", 
+                                        "text/xml", 
+                                        "text/html"
+                                    });
+
+            var readers = new List<IDataReader>
+                              {
+                                  jsonReader, 
+                                  xmlReader
+                              };
 
             var dataReaderProvider = new RegExBasedDataReaderProvider(readers);
+            var resultingDecoder = new DefaultDecoder(dataReaderProvider);
             
-            return new DefaultDecoder(dataReaderProvider);
+            return resultingDecoder;
         }
 
         public static CombinedResolverStrategy CombinedResolverStrategy()
         {
-            return new CombinedResolverStrategy(
+            var combinedResolverStrategy = new CombinedResolverStrategy(
                 new JsonResolverStrategy(),
                 new DataContractResolverStrategy(),                                     
                 new XmlResolverStrategy(),                                                              
@@ -114,6 +158,8 @@ namespace EasyHttp.Configuration
                 new ConventionResolverStrategy(ConventionResolverStrategy.WordCasing.NoChange, "-"),
                 new ConventionResolverStrategy(ConventionResolverStrategy.WordCasing.Lowercase, "-"),   
                 new ConventionResolverStrategy(ConventionResolverStrategy.WordCasing.Uppercase, "_"));
+
+            return combinedResolverStrategy;
         }
     }
 }
