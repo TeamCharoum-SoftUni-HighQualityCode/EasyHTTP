@@ -71,6 +71,7 @@ namespace EasyHttp.Codecs
             this.dataWriterProvider = dataWriterProvider;
         }
 
+        //ToDo method name should be changed
         public byte[] Encode(object input, string contentType)
         {
       

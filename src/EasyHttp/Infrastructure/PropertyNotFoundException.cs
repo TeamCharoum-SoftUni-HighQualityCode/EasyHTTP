@@ -72,7 +72,7 @@ namespace EasyHttp.Infrastructure
 
         public PropertyNotFoundException(string propertyName) : base(propertyName)
         {
-            PropertyName = propertyName;
+            this.PropertyName = propertyName;
         }
 
         public PropertyNotFoundException(string message, Exception innerException) : base(message, innerException)

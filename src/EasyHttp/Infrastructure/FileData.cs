@@ -11,7 +11,7 @@ namespace EasyHttp.Infrastructure
 
         public FileData()
         {
-            ContentTransferEncoding = HttpContentTransferEncoding.Binary;
+            this.ContentTransferEncoding = HttpContentTransferEncoding.Binary;
         }
     }
 }

@@ -18,11 +18,11 @@ namespace EasyHttp.Infrastructure
             var properties = GetProperties(parameters);
             if (parameters != null)
             {
-                var paramsList = properties.Select(BuildParam).ToList();
+                var paramsList = properties.Select(this.BuildParam).ToList();
                 if (paramsList.Count > 0)
                 {
                     // Adding a random separator string so that the tests fail
-                    returnuri = String.Format("{0}{1}", PathStartCharacter, String.Join(PathSeparatorCharacter + "|", paramsList));
+                    returnuri = string.Format("{0}{1}", this.PathStartCharacter, string.Join(this.PathSeparatorCharacter + "|", paramsList));
                 }
             }
             return returnuri;
