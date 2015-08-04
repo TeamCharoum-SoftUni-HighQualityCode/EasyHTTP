@@ -55,51 +55,83 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-
-using System;
-using System.IO;
-using System.Net;
-using System.Text;
-using EasyHttp.Codecs;
-
 namespace EasyHttp.Http
 {
+    using System;
+    using System.IO;
+    using System.Net;
+    using System.Text;
+    using EasyHttp.Codecs;
+
     public class HttpResponse
     {
-        readonly IDecoder _decoder;
-        HttpWebResponse _response;
+        private readonly IDecoder decoder;
+
+        private HttpWebResponse response;
+
+        public HttpResponse(IDecoder decoder)
+        {
+            this.decoder = decoder;
+        }
 
         public string CharacterSet { get; private set; }
+
         public string ContentType { get; private set; }
+
         public HttpStatusCode StatusCode { get; private set; }
+
         public string StatusDescription { get; private set; }
+
         public CookieCollection Cookies { get; private set; }
+
         public int Age { get; private set; }
+
         public HttpMethodType[] Allow { get; private set; }
+
         public CacheControl CacheControl { get; private set; }
+
         public string ContentEncoding { get; private set; }
+
         public string ContentLanguage { get; private set; }
+
         public long ContentLength { get; private set; }
+
         public string ContentLocation { get; private set; }
-        
+
         // TODO :This should be files
         public string ContentDisposition { get; private set; }
-        
+
         public DateTime Date { get; private set; }
+
         public string ETag { get; private set; }
+
         public DateTime Expires { get; private set; }
+
         public DateTime LastModified { get; private set; }
+
         public string Location { get; private set; }
+
         public CacheControl Pragma { get; private set; }
+
         public string Server { get; private set; }
+
         public WebHeaderCollection RawHeaders { get; private set; }
-        public Stream ResponseStream { get { return _response.GetResponseStream(); }
+
+        public Stream ResponseStream
+        {
+            get
+            {
+                return this.response.GetResponseStream();
+            }
         }
 
 
         public dynamic DynamicBody
         {
-            get { return _decoder.DecodeToDynamic(RawText, ContentType); }
+            get
+            {
+                return this.decoder.DecodeToDynamic(this.RawText, this.ContentType);
+            }
         }
 
         public string RawText { get; private set; }
@@ -108,24 +140,17 @@ namespace EasyHttp.Http
         {
             if (overrideContentType != null)
             {
-                return _decoder.DecodeToStatic<T>(RawText, overrideContentType);
+                return this.decoder.DecodeToStatic<T>(this.RawText, overrideContentType);
             }
-            return _decoder.DecodeToStatic<T>(RawText, ContentType);
-        }
 
-        public HttpResponse(IDecoder decoder)
-        {
-            _decoder = decoder;
+            return this.decoder.DecodeToStatic<T>(this.RawText, this.ContentType);
         }
-
-       
 
         public void GetResponse(WebRequest request, string filename, bool streamResponse)
         {
             try
             {
-                _response = (HttpWebResponse) request.GetResponse();
-
+                this.response = (HttpWebResponse)request.GetResponse();
             }
             catch (WebException webException)
             {
@@ -133,54 +158,60 @@ namespace EasyHttp.Http
                 {
                     throw;
                 }
-                _response = (HttpWebResponse) webException.Response;
 
+                this.response = (HttpWebResponse)webException.Response;
             }
 
-            GetHeaders();
+            this.GetHeaders();
 
-	        if (streamResponse) return;
+            if (streamResponse)
+            {
+                return;
+            }
 
-	        using (var stream = _response.GetResponseStream())
-	        {
-		        if (stream == null) return;
+            using (var stream = this.response.GetResponseStream())
+            {
+                if (stream == null)
+                {
+                    return;
+                }
 
-		        if (!string.IsNullOrEmpty(filename))
-		        {
-			        using (var filestream = new FileStream(filename, FileMode.CreateNew))
-			        {
-				        int count;
-				        var buffer = new byte[8192];
+                if (!string.IsNullOrEmpty(filename))
+                {
+                    using (var filestream = new FileStream(filename, FileMode.CreateNew))
+                    {
+                        int count;
+                        var buffer = new byte[8192];
 
-				        while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
-				        {
-					        filestream.Write(buffer, 0, count);
-				        }
-			        }
-		        }
-		        else
-		        {
-                    var encoding = string.IsNullOrEmpty(CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(CharacterSet);
+                        while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            filestream.Write(buffer, 0, count);
+                        }
+                    }
+                }
+                else
+                {
+                    var encoding = string.IsNullOrEmpty(this.CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(CharacterSet);
                     using (var reader = new StreamReader(stream, encoding))
-			        {
-				        RawText = reader.ReadToEnd();
-			        }
-		        }
-	        }
+                    {
+                        this.RawText = reader.ReadToEnd();
+                    }
+                }
+            }
         }
 
-        void GetHeaders()
+        private void GetHeaders()
         {
-            CharacterSet = _response.CharacterSet;
-            ContentType = _response.ContentType;
-            StatusCode = _response.StatusCode;
-            StatusDescription = _response.StatusDescription;
-            Cookies = _response.Cookies;
-            ContentEncoding = _response.ContentEncoding;
-            ContentLength = _response.ContentLength;
+            CharacterSet = response.CharacterSet;
+            ContentType = response.ContentType;
+            StatusCode = response.StatusCode;
+            StatusDescription = response.StatusDescription;
+            Cookies = response.Cookies;
+            ContentEncoding = response.ContentEncoding;
+            ContentLength = response.ContentLength;
             Date = DateTime.Now;
-            LastModified = _response.LastModified;
-            Server = _response.Server;
+            LastModified = response.LastModified;
+            Server = response.Server;
 
             if (!String.IsNullOrEmpty(GetHeader("Age")))
             {
@@ -192,10 +223,10 @@ namespace EasyHttp.Http
             ContentDisposition = GetHeader("Content-Disposition");
             ETag = GetHeader("ETag");
             Location = GetHeader("Location");
-                
+
             if (!String.IsNullOrEmpty(GetHeader("Expires")))
             {
-                DateTime expires; 
+                DateTime expires;
                 if (DateTime.TryParse(GetHeader("Expires"), out expires))
                 {
                     Expires = expires;
@@ -208,12 +239,12 @@ namespace EasyHttp.Http
             //   public CacheControl Pragma { get; private set; }
 
 
-            RawHeaders = _response.Headers;
+            RawHeaders = response.Headers;
         }
 
         string GetHeader(string header)
         {
-            var headerValue = _response.GetResponseHeader(header);
+            var headerValue = response.GetResponseHeader(header);
 
             return headerValue.Replace("\"", "");
         }
