@@ -34,6 +34,17 @@ namespace EasyHttp.Codecs
             return deserializer.Read(parsedText);
         }
 
+        private static string NormalizeInputRemovingAmpersands(string input)
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                throw new ArgumentNullException(input, "Input can not be null or empty!");
+            }
+
+            var parsedText = input.Replace("\"@", "\"");
+            return parsedText;
+        }
+
         private IDataReader ObtainDeserializer(string contentType)
         {
             var deserializer = this.dataReaderProvider.Find(contentType);
@@ -46,15 +57,6 @@ namespace EasyHttp.Codecs
             return deserializer;
         }
 
-        private static string NormalizeInputRemovingAmpersands(string input)
-        {
-            if (string.IsNullOrEmpty(input))
-            {
-                throw new ArgumentNullException(nameof(input), "Input can not be null or empty!");
-            }
-
-            var parsedText = input.Replace("\"@", "\"");
-            return parsedText;
-        }
+        
     }
 }
