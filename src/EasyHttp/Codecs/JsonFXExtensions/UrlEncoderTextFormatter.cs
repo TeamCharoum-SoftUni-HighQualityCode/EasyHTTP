@@ -55,25 +55,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Web;
-using JsonFx.Model;
-using JsonFx.Serialization;
-
 namespace EasyHttp.Codecs.JsonFXExtensions
 {
-	using System.Globalization;
-
-	public class UrlEncoderTextFormatter : ITextFormatter<ModelTokenType>
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.IO;
+    using System.Web;
+    using JsonFx.Model;
+    using JsonFx.Serialization;
+    
+    public class UrlEncoderTextFormatter : ITextFormatter<ModelTokenType>
     {
         public void Format(IEnumerable<Token<ModelTokenType>> tokens, TextWriter writer)
         {
             var firstProperty = true;
-            
-            foreach(var token in tokens)
+
+            foreach (var token in tokens)
             {
                 switch (token.TokenType)
                 {
@@ -92,6 +90,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
                         {
                             writer.Write("&");
                         }
+
                         firstProperty = false;
                         writer.Write(token.Name);
                         continue;
@@ -100,10 +99,12 @@ namespace EasyHttp.Codecs.JsonFXExtensions
                         {
                             var urlEncode = HttpUtility.UrlEncode(token.Value.ToString());
                             writer.Write("={0}", urlEncode);
-                        } else
+                        }
+                        else
                         {
                             writer.Write("=");
                         }
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -115,7 +116,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
         {
             using (var writer = new StringWriter(CultureInfo.InvariantCulture))
             {
-                Format(tokens, writer);
+                this.Format(tokens, writer);
 
                 return writer.GetStringBuilder().ToString();
             }

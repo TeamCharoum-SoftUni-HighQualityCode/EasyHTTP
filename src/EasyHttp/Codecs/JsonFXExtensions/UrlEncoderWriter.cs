@@ -55,49 +55,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-
-using System.Collections.Generic;
-using EasyHttp.Http;
-using JsonFx.Model;
-using JsonFx.Serialization;
-
 namespace EasyHttp.Codecs.JsonFXExtensions
 {
-    public class UrlEncoderWriter: ModelWriter 
+    using System.Collections.Generic;
+    using EasyHttp.Http;
+    using JsonFx.Model;
+    using JsonFx.Serialization;
+
+    public class UrlEncoderWriter : ModelWriter
     {
-        readonly string[] _contentTypes;
+        private readonly string[] contentTypes;
 
-        public UrlEncoderWriter(DataWriterSettings settings, params string[] contentTypes) : base(settings)
+        public UrlEncoderWriter(DataWriterSettings settings, params string[] contentTypes)
+            : base(settings)
         {
-            _contentTypes = contentTypes;
+            this.contentTypes = contentTypes;
         }
-
-        protected override ITextFormatter<ModelTokenType> GetFormatter()
-        {
-            return new UrlEncoderTextFormatter();
-        }
-
+        
         public override IEnumerable<string> ContentType
         {
             get
             {
-				if (_contentTypes != null)
-				{
-					foreach (var contentType in _contentTypes)
-					{
-						yield return contentType;
-					}
-					yield break;
-				}
+                if (this.contentTypes != null)
+                {
+                    foreach (var contentType in this.contentTypes)
+                    {
+                        yield return contentType;
+                    }
 
-
+                    yield break;
+                }
+                
                 yield return HttpContentTypes.ApplicationXWwwFormUrlEncoded;
             }
         }
 
         public override IEnumerable<string> FileExtension
         {
-            get { return new List<string>();  }
+            get { return new List<string>(); }
+        }
+
+        protected override ITextFormatter<ModelTokenType> GetFormatter()
+        {
+            return new UrlEncoderTextFormatter();
         }
     }
 }
