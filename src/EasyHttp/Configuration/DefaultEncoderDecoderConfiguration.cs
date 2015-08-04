@@ -56,19 +56,19 @@
 // THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using EasyHttp.Codecs;
-using EasyHttp.Codecs.JsonFXExtensions;
-using JsonFx.Json;
-using JsonFx.Json.Resolvers;
-using JsonFx.Model.Filters;
-using JsonFx.Serialization;
-using JsonFx.Serialization.Resolvers;
-using JsonFx.Xml;
-using JsonFx.Xml.Resolvers;
-
 namespace EasyHttp.Configuration
 {
+    using System.Collections.Generic;
+    using EasyHttp.Codecs;
+    using EasyHttp.Codecs.JsonFXExtensions;
+    using JsonFx.Json;
+    using JsonFx.Json.Resolvers;
+    using JsonFx.Model.Filters;
+    using JsonFx.Serialization;
+    using JsonFx.Serialization.Resolvers;
+    using JsonFx.Xml;
+    using JsonFx.Xml.Resolvers;
+
     public class DefaultEncoderDecoderConfiguration : IEncoderDecoderConfiguration
     {
         public IEncoder GetEncoder()

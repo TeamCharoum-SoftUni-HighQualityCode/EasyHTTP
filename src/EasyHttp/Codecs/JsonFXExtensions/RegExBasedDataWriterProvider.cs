@@ -56,16 +56,16 @@
 // THE SOFTWARE.
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using JsonFx.Serialization;
-using JsonFx.Serialization.Providers;
-
 namespace EasyHttp.Codecs.JsonFXExtensions
 {
+	using System;
+	using System.Collections.Generic;
+	using System.IO;
+	using System.Linq;
+	using System.Text.RegularExpressions;
+	using JsonFx.Serialization;
+	using JsonFx.Serialization.Providers;
+
 	// TODO: This is a copy of the DataWriterProvider in JsonFX. 
 	// Need to clean it up and move things elsewhere
 	public class RegExBasedDataWriterProvider: IDataWriterProvider
@@ -77,7 +77,6 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 		
 		private readonly IDictionary<string, IDataWriter> writersByMime = 
 			new Dictionary<string, IDataWriter>(StringComparer.OrdinalIgnoreCase);
-
 		
 		public RegExBasedDataWriterProvider(IEnumerable<IDataWriter> writers)
 		{
@@ -119,15 +118,13 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 			}
 		}
 
-
 		public IDataWriter DefaultDataWriter
 		{
-		    get
-		    {
-		        return this.defaultWriter;
-		    }
+			get
+			{
+				return this.defaultWriter;
+			}
 		}
-
 
 		public IDataWriter Find(string extension)
 		{

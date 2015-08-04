@@ -56,15 +56,14 @@
 // THE SOFTWARE.
 #endregion
 
-using System.Collections.Generic;
-using System.Reflection;
-using JsonFx.Json.Resolvers;
-using JsonFx.Serialization;
-
 namespace EasyHttp.Codecs.JsonFXExtensions
 {
 	using System;
-
+	using System.Collections.Generic;
+	using System.Reflection;
+	using JsonFx.Json.Resolvers;
+	using JsonFx.Serialization;
+	
 	public class RemoveAmpersandFromNameJsonResolverStrategy: JsonResolverStrategy
 	{
 		public override IEnumerable<DataName> GetName(MemberInfo member)
