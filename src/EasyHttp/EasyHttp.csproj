@@ -67,7 +67,7 @@
     <Compile Include="Http\HttpClient.cs" />
     <Compile Include="Http\HttpContentTransferEncoding.cs" />
     <Compile Include="Http\HttpContentTypes.cs" />
-    <Compile Include="Http\HttpMethod.cs" />
+    <Compile Include="Http\HttpMethodType.cs" />
     <Compile Include="Http\HttpRequest.cs" />
     <Compile Include="Http\HttpResponse.cs" />
     <Compile Include="Http\MultipartStreamer.cs" />
