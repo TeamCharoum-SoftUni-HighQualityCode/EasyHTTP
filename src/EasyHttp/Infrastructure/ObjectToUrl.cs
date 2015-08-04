@@ -8,15 +8,8 @@ namespace EasyHttp.Infrastructure
 {
     public abstract class ObjectToUrl
     {
-        protected abstract string PathStartCharacter
-        {
-            get;
-        }
-
-        protected abstract string PathSeparatorCharacter
-        {
-            get;
-        }
+        protected abstract string PathStartCharacter { get; }
+        protected abstract string PathSeparatorCharacter { get; }
 
         protected abstract string BuildParam(PropertyValue propertyValue);
 

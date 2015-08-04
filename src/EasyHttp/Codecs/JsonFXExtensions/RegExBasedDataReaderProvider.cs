@@ -9,7 +9,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 {
     public class RegExBasedDataReaderProvider: IDataReaderProvider
     {
-        readonly IDictionary<string, IDataReader> _readersByMime = new Dictionary<string, IDataReader>(StringComparer.OrdinalIgnoreCase);
+        readonly IDictionary<string, IDataReader> readersByMime = new Dictionary<string, IDataReader>(StringComparer.OrdinalIgnoreCase);
 
         public RegExBasedDataReaderProvider(IEnumerable<IDataReader> dataReaders)
         {
@@ -20,23 +20,24 @@ namespace EasyHttp.Codecs.JsonFXExtensions
                     foreach (string contentType in reader.ContentType)
                     {
                         if (String.IsNullOrEmpty(contentType) ||
-                            _readersByMime.ContainsKey(contentType))
+                            this.readersByMime.ContainsKey(contentType))
                         {
                             continue;
                         }
 
-                        _readersByMime[contentType] = reader;
+                        this.readersByMime[contentType] = reader;
                     }
                 }
             }
 
         }
 
+        //ToDo method name should be changed
         public IDataReader Find(string contentTypeHeader)
         {
             var type = DataProviderUtility.ParseMediaType(contentTypeHeader);
 
-            var readers = _readersByMime.Where(reader => Regex.Match(type, reader.Key, RegexOptions.Singleline).Success);
+            var readers = this.readersByMime.Where(reader => Regex.Match(type, reader.Key, RegexOptions.Singleline).Success);
 			 
             return readers.Any() ? readers.First().Value : null;
         }

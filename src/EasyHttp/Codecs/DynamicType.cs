@@ -55,31 +55,29 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-
-using System.Collections.Generic;
-using System.Dynamic;
-using EasyHttp.Infrastructure;
-
 namespace EasyHttp.Codecs
 {
-	using System.Globalization;
+    using System.Collections.Generic;
+    using System.Dynamic;
+    using System.Globalization;
+    using EasyHttp.Infrastructure;
 
-	public class DynamicType: DynamicObject
+    public class DynamicType : DynamicObject
     {
-        readonly Dictionary<string, object> properties = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> properties = new Dictionary<string, object>();
 
         public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
-	        var binderName = binder.Name.ToLower(CultureInfo.InvariantCulture);
-	        object value;
+            var binderName = binder.Name.ToLower(CultureInfo.InvariantCulture);
+            object value;
 
             if (!this.properties.TryGetValue(binderName, out value))
             {
-                throw new PropertyNotFoundException(nameof(binder.Name));
+                throw new PropertyNotFoundException(binder.Name);
             }
-				 
-	        result = value;
-	        return true;
+
+            result = value;
+            return true;
         }
 
         public override bool TrySetMember(SetMemberBinder binder, object value)
@@ -87,7 +85,5 @@ namespace EasyHttp.Codecs
             this.properties[binder.Name.ToLower(CultureInfo.InvariantCulture)] = value;
             return true;
         }
-
-      
     }
 }

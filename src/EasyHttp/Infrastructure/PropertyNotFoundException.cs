@@ -55,32 +55,34 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
-
-using System;
-using System.Runtime.Serialization;
-
 namespace EasyHttp.Infrastructure
 {
-	 [Serializable]
+    using System;
+    using System.Runtime.Serialization;
+
+    [Serializable]
     public class PropertyNotFoundException : Exception
     {
-        public string PropertyName { get; private set; }
-
         public PropertyNotFoundException()
         {
         }
 
-        public PropertyNotFoundException(string propertyName) : base(propertyName)
+        public PropertyNotFoundException(string propertyName)
+            : base(propertyName)
         {
-            PropertyName = propertyName;
+            this.PropertyName = propertyName;
         }
 
-        public PropertyNotFoundException(string message, Exception innerException) : base(message, innerException)
+        public PropertyNotFoundException(string message, Exception innerException)
+            : base(message, innerException)
         {
         }
 
-        protected PropertyNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected PropertyNotFoundException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
-        }		
+        }
+
+        public string PropertyName { get; private set; }
     }
 }
