@@ -4,7 +4,7 @@ namespace EasyHttp.Infrastructure
 {
     public class UriComposer
     {
-        readonly ObjectToUrlParameters objectToUrlParameters;
+        private readonly ObjectToUrlParameters objectToUrlParameters;
         private readonly ObjectToUrlSegments objectToUrlSegments;
 
         public UriComposer()
@@ -13,22 +13,24 @@ namespace EasyHttp.Infrastructure
             this.objectToUrlSegments = new ObjectToUrlSegments();
         }
 
-        public string Compose(string baseuri, string uri, object query, bool parametersAsSegments)
+        public string Compose(string baseuri, string uri, object query, bool parametersAreSegments)
         {
             var returnUri = uri;
-            if(!String.IsNullOrEmpty(baseuri))
+            if(!string.IsNullOrEmpty(baseuri))
             {
-                returnUri = baseuri.EndsWith("/") ? baseuri : String.Concat(baseuri,"/");
+                returnUri = baseuri.EndsWith("/") ? baseuri : string.Concat(baseuri,"/");
                 returnUri += uri.StartsWith("/", StringComparison.InvariantCulture) ? uri.Substring(1) : uri;
             }
-            if (parametersAsSegments)
+
+            if (parametersAreSegments)
             {
-                returnUri = query != null ? String.Concat(returnUri, this.objectToUrlSegments.ParametersToUrl(query)) : returnUri;
+                returnUri = query != null ? string.Concat(returnUri, this.objectToUrlSegments.ParametersToUrl(query)) : returnUri;
             }
             else
             {
-                returnUri = query != null ? String.Concat(returnUri, this.objectToUrlParameters.ParametersToUrl(query)) : returnUri;
+                returnUri = query != null ? string.Concat(returnUri, this.objectToUrlParameters.ParametersToUrl(query)) : returnUri;
             }
+
             return returnUri;
         }
     }

@@ -26,7 +26,7 @@ namespace EasyHttp.Infrastructure
                     throw new Exception("The list of parameters is empty.");
                 }
 
-                uri = string.Format("{0}{1}", PathStartCharacter, String.Join(PathSeparatorCharacter, paramsList));
+                uri = string.Format("{0}{1}", this.PathStartCharacter, String.Join(this.PathSeparatorCharacter, paramsList));
             }
             return uri;
         }
