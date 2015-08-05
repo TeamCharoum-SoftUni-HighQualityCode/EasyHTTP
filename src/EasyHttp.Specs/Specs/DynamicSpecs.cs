@@ -64,35 +64,34 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.Specs
 {
     [Subject("DynamicType")]
-    public class when_accessing_a_property_that_is_defined
+    public class WhenAccessingAPropertyThatIsDefined
     {
+        static dynamic dynamicObject;
+        static string value;
+
         Establish context = () =>
         {
-            dynamicObject = new DynamicType();
-            
+            dynamicObject = new DynamicType();            
             dynamicObject.Name = "Joe";
         };
 
         Because of = () =>
         {
-
             value = dynamicObject.Name;
-
         };
 
-        It should_return_the_value = () => value.ShouldEqual("Joe");
-
-        static dynamic dynamicObject;
-        static string value;
+        It shouldReturnTheValue = () => value.ShouldEqual("Joe");      
     }
 
     [Subject("DynamicType")]
-    public class when_accessing_a_property_that_is_not_defined
+    public class WhenAccessingAPropertyThatIsNotDefined
     {
+        static dynamic dynamicObject;
+        static Exception exception;
+
         Establish context = () =>
         {
             dynamicObject = new DynamicType();
-
         };
 
         Because of = () =>
@@ -101,28 +100,24 @@ namespace EasyHttp.Specs.Specs
             exception = Catch.Exception( () => value = dynamicObject.Name );
         };
 
-        It should_throw_property_not_found_exception = () => exception.ShouldBeOfType<PropertyNotFoundException>();
-
-        It should_set_property_name_to_name_of_property_not_found = () => ((PropertyNotFoundException)exception).PropertyName.ShouldEqual("Name");
-
-        static dynamic dynamicObject;
-        static Exception exception;
+        It shouldThrowPropertyNotFoundException = () => exception.ShouldBeOfType<PropertyNotFoundException>();
+        It shouldSetPropertyNameToNameOfPropertyNotFound = () => ((PropertyNotFoundException)exception).PropertyName.ShouldEqual("Name");       
     }
 
 
     [Subject("DynamicType")]
-    public class when_accessing_a_property_of_a_child_property_that_is_defined
+    public class WhenAccessingAPropertyOfAChildPropertyThatIsDefined
     {
+        static dynamic childObject;
+        static dynamic parentObject;
+        static string value;
+
         Establish context = () =>
         {
             childObject = new DynamicType();
-
             childObject.Name = "Child";
-
             parentObject = new DynamicType();
-
             parentObject.Child = childObject;
-
         };
 
         Because of = () =>
@@ -130,22 +125,21 @@ namespace EasyHttp.Specs.Specs
             value = parentObject.Child.Name;
         };
 
-        It should_return_the_value = () => value.ShouldEqual("Child");
-
-        static dynamic childObject;
-        static dynamic parentObject;
-        static string value;
+        It shouldReturnTheValue = () => value.ShouldEqual("Child");
     }
 
     [Subject("Infrastructure")]
-    public class when_accessing_a_property_of_a_child_property_that_is_not_defined
+    public class WhenAccessingAPropertyOfAChildPropertyThatIsNotDefined
     {
+        static dynamic childObject;
+        static dynamic parentObject;
+        static string value;
+        static Exception exception;
+
         Establish context = () =>
         {
             childObject = new DynamicType();
-
             parentObject = new DynamicType();
-
             parentObject.Child = childObject;
         };
 
@@ -155,15 +149,7 @@ namespace EasyHttp.Specs.Specs
             exception = Catch.Exception(() => value = parentObject.Child.Name);
         };
 
-        It should_throw_property_not_found_exception = () => exception.ShouldBeOfType<PropertyNotFoundException>();
-
-        It should_set_property_name_to_name_of_property_not_found = () => ((PropertyNotFoundException)exception).PropertyName.ShouldEqual("Name");
-
-        static dynamic childObject;
-        static dynamic parentObject;
-        static string value;
-        static Exception exception;
-    }
-
-   
+        It shouldThrowPropertyNotFoundException = () => exception.ShouldBeOfType<PropertyNotFoundException>();
+        It shouldSetPropertyNameToNameOfPropertyNotFound = () => ((PropertyNotFoundException)exception).PropertyName.ShouldEqual("Name");
+    }   
 }

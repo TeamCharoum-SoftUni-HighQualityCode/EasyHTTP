@@ -6,8 +6,12 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.Specs
 {
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_with_one_parameter_using_expando_object
+    public class WhenMakingUrlParametersWithOneParameterUsingExpandoObject
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        private static dynamic parameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
@@ -16,17 +20,16 @@ namespace EasyHttp.Specs.Specs
         };
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(parameters);
-
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        private static dynamic parameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test");       
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_with_two_parameters_using_expando_object
+    public class WhenMakingUrlParametersWithTwoParametersUsingExpandoObject
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        private static dynamic parameters;
+        private static string url;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
@@ -37,16 +40,15 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(parameters);
 
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test&Id=1");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        private static dynamic parameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test&Id=1");      
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_with_one_parameter_using_anonymous_object
+    public class WhenMakingUrlParametersWithOneParameterUsingAnonymousObject
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
@@ -54,63 +56,61 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(new {Name = "test"});
 
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test");       
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_with_two_parameters_using_anonymous_object
+    public class WhenMakingUrlParametersWithTwoParametersUsingAnonymousObject
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
         };
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(new { Name = "test", Id=1 });
-
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test&Id=1");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test&Id=1");        
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_it_should_encode_value
+    public class WhenMakingUrlParametersItShouldEncodeValue
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
         };
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(new { Name = "test<>&;"});
-
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test%3c%3e%26%3b");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test%3c%3e%26%3b");       
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_it_should_be_empty_when_passing_null
+    public class WhenMakingUrlParametersItShouldBeEmptyWhenPassingNull
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
         };
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(null);
-
-        It should_have_the_correct_url_parameters = () => url.ShouldBeEmpty();
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldBeEmpty();
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_with_one_parameter_using_static_object
+    public class WhenMakingUrlParametersWithOneParameterUsingStaticObject
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        static string url;
+        static StaticObjectWithName parameter;
+
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
@@ -118,17 +118,16 @@ namespace EasyHttp.Specs.Specs
         };
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(parameter);
-
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
-        static StaticObjectWithName parameter;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test");       
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_parameters_with_two_parameters_using_static_object
+    public class WhenMakingUrlParametersWithTwoParametersUsingStaticObject
     {
+        static ObjectToUrlParameters objectToUrlParameters;
+        static string url;
+        static StaticObjectWithNameAndId parameter;
+        
         Establish context = () =>
         {
             objectToUrlParameters = new ObjectToUrlParameters();
@@ -136,12 +135,7 @@ namespace EasyHttp.Specs.Specs
         };
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(parameter);
-
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("?Name=test&Id=1");
-
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
-        static StaticObjectWithNameAndId parameter;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test&Id=1");
     }
 
     public class StaticObjectWithName
