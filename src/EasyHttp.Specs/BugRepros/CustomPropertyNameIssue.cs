@@ -13,7 +13,7 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.BugRepros
 {
     [Subject("Custom Decoding")]
-    public class when_decoding_an_object_with_custom_naming_of_property
+    public class WhenDecodingAnObjectWithCustomNamingOfProperty
     {
         static CombinedResolverStrategy CombinedResolverStrategy()
         {
@@ -35,11 +35,10 @@ namespace EasyHttp.Specs.BugRepros
 
         Because of = () =>
         {
-
             obj = decoder.DecodeToStatic<CustomNaming>("{\"abc\":\"def\"}", "application/json");
         };
 
-        It should_decode_taking_into_account_custom_property_name = () =>
+        It shouldDecodeTakingIntoAccountCustomPropertyName = () =>
         {
             obj.PropertyName.ShouldEqual("def");
         };
@@ -47,10 +46,9 @@ namespace EasyHttp.Specs.BugRepros
         static IDecoder decoder;
         static CustomNaming obj;
     }
-
     
     [Subject("Custom Encoding")]
-    public class when_encoding_an_object_with_custom_naming_of_property
+    public class WhenEncodingAnObjectWithCustomNamingOfProperty
     {
         static CombinedResolverStrategy CombinedResolverStrategy()
         {
@@ -65,9 +63,7 @@ namespace EasyHttp.Specs.BugRepros
         }
 
         Establish context = () =>
-        {
-    
-            
+        {    
             IEnumerable<IDataWriter> writers = new List<IDataWriter> { new JsonWriter(new DataWriterSettings(CombinedResolverStrategy()), HttpContentTypes.ApplicationJson) };
 
             encoder = new DefaultEncoder(new RegExBasedDataWriterProvider(writers));
@@ -78,11 +74,9 @@ namespace EasyHttp.Specs.BugRepros
             var customObject = new CustomNamedObject {UpperPropertyName = "someValue"};
 
             encoded = encoder.Encode(customObject, HttpContentTypes.ApplicationJson);
-
-
         };
 
-        It should_decode_taking_into_account_custom_property_name = () =>
+        It shouldDecodeTakingIntoAccountCustomPropertyName = () =>
         {
             var str = System.Text.Encoding.UTF8.GetString(encoded);
             str.ShouldContain("upperPropertyName");

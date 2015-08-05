@@ -3,7 +3,7 @@ using Machine.Specifications;
 
 namespace EasyHttp.Specs.Specs
 {
-    public class When_baseuri_is_null_and_query_is_null
+    public class WhenBaseuriIsNullAndQueryIsNull
     {
         Establish context = () =>
         {
@@ -13,14 +13,14 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(null, uri, null, false);
 
-        It should_return_the_uri = () => url.ShouldEqual("uri");
+        It shouldReturnTheUri = () => url.ShouldEqual("uri");
 
         static UriComposer uriComposer;
         static string url;
         static string uri;
     }
 
-    public class When_baseuri_is_empty_and_query_is_null
+    public class WhenBaseuriIsEmptyAndQueryIsNull
     {
         Establish context = () =>
         {
@@ -31,7 +31,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
 
-        It should_return_the_uri = () => url.ShouldEqual("uri");
+        It shouldReturnTheUri = () => url.ShouldEqual("uri");
 
         static UriComposer uriComposer;
         static string url;
@@ -39,7 +39,7 @@ namespace EasyHttp.Specs.Specs
         static string baseuri;
     }
 
-    public class When_baseuri_is_filled_and_does_not_end_with_a_forwardslash_and_query_is_null
+    public class WhenBaseuriIsFilledAndDoesNotEndWithAForwardslashAndQueryIsNull
     {
         Establish context = () =>
         {
@@ -50,7 +50,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
 
-        It should_return_the_baseuri_plus_uri = () => url.ShouldEqual("baseuri/uri");
+        It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");
 
         static UriComposer uriComposer;
         static string url;
@@ -58,7 +58,7 @@ namespace EasyHttp.Specs.Specs
         static string baseuri;
     }
 
-    public class When_baseuri_is_filled_and_ends_with_a_forwardslash_and_query_is_null
+    public class WhenBaseuriIsFilledAndEndsWithAForwardslashAndQueryIsNull
     {
         Establish context = () =>
         {
@@ -69,7 +69,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
 
-        It should_return_the_baseuri_plus_uri = () => url.ShouldEqual("baseuri/uri");
+        It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");
 
         static UriComposer uriComposer;
         static string url;
@@ -77,7 +77,7 @@ namespace EasyHttp.Specs.Specs
         static string baseuri;
     }
 
-    public class When_baseuri_is_filled_and_ends_with_a_forwardslash_and_uri_starartswith_a_forwardslash_and_query_is_null
+    public class WhenBaseuriIsFilledAndEndsWithAForwardslashAndUriStarartswithAForwardslashAndQueryIsNull
     {
         Establish context = () =>
         {
@@ -88,7 +88,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
 
-        It should_return_the_baseuri_plus_uri = () => url.ShouldEqual("baseuri/uri");
+        It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");
 
         static UriComposer uriComposer;
         static string url;
@@ -96,7 +96,7 @@ namespace EasyHttp.Specs.Specs
         static string baseuri;
     }
 
-    public class When_baseuri_is_filled_and_does_not_end_with_a_forwardslash_and_uri_starartswith_a_forwardslash_and_query_is_null
+    public class WhenBaseuriIsFilledAndDoesNotEndWithAForwardslashAndUriStarartswithAForwardslashAndQueryIsNull
     {
         Establish context = () =>
         {
@@ -107,7 +107,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
 
-        It should_return_the_baseuri_plus_uri = () => url.ShouldEqual("baseuri/uri");
+        It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");
 
         static UriComposer uriComposer;
         static string url;
@@ -115,7 +115,7 @@ namespace EasyHttp.Specs.Specs
         static string baseuri;
     }
 
-    public class When_baseuri_and_url_are_filled_and_query_is_not_null
+    public class WhenBaseuriAndUrlAreFilledAndQueryIsNotNull
     {
         Establish context = () =>
         {
@@ -127,7 +127,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, query, false);
 
-        It should_return_the_baseuri_plus_uri = () => url.ShouldEqual("baseuri/uri?Name=test");
+        It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri?Name=test");
 
         static UriComposer uriComposer;
         static string url;
@@ -136,7 +136,7 @@ namespace EasyHttp.Specs.Specs
         static object query;
     }
 
-    public class When_baseuri_and_url_are_filled_and_query_is_not_null_and_ParametersAsSegments_is_true
+    public class WhenBaseuriAndUrlAreFilledAndQueryIsNotNullAndParametersAsSegmentsIsTrue
     {
         Establish context = () =>
         {
@@ -148,7 +148,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = uriComposer.Compose(baseuri, uri, query, true);
 
-        It should_return_the_baseuri_plus_uri = () => url.ShouldEqual("baseuri/uri/test");
+        It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri/test");
 
         static UriComposer uriComposer;
         static string url;

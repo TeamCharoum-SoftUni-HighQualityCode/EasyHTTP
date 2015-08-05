@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.Specs
 {
     [Subject(typeof(HttpClient))]
-    public class when_making_a_GET_with_stream_response_true
+    public class WhenMakingAGetWithStreamResponseTrue
     {
         // TODO: Implement me
         static HttpClient httpClient;

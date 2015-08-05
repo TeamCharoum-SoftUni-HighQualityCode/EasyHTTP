@@ -66,8 +66,11 @@ using Result = EasyHttp.Specs.Helpers.ResultResponse;
 namespace EasyHttp.Specs.Specs
 {
     [Subject("HttpClient")]
-    public class when_making_any_type_of_request_to_invalid_host
+    public class WhenMakingAnyTypeOfRequestToInvalidHost
     {
+        static HttpClient httpClient;
+        static Exception exception;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -76,29 +79,27 @@ namespace EasyHttp.Specs.Specs
         Because of = () =>
         {
             exception = Catch.Exception( () => httpClient.Get("http://somethinginvalid") );
-
         };
 
-        It should_throw_web_exception  = () => exception.ShouldBeOfType<WebException>();
-
-        static HttpClient httpClient;
-        static Exception exception;
+        It shouldThrowWebException  = () => exception.ShouldBeOfType<WebException>();      
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_DELETE_request_with_a_valid_uri 
+    public class WhenMakingADeleteRequestWithAValidUri 
     {
         // TODO: Implement me
-
         static HttpClient httpClient;
         static dynamic response;
         static string rev;
         static Guid guid;
     }
-
     [Subject("HttpClient")]
-    public class when_making_a_GET_request_with_valid_uri
+    public class WhenMakingAGetRequestWithValidUri
     {
+
+        static HttpClient httpClient;
+        static HttpResponse httpResponse;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -110,17 +111,17 @@ namespace EasyHttp.Specs.Specs
 
         };
 
-        It should_return_body_with_rawtext =
-            () => httpResponse.RawText.ShouldNotBeEmpty();
-
-    
-        static HttpClient httpClient;
-        static HttpResponse httpResponse;
+        It shouldReturnBodyWithRawtext =
+            () => httpResponse.RawText.ShouldNotBeEmpty();    
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_GET_request_with_valid_uri_and__and_valid_parameters
+    public class WhenMakingAGetRequestWithValidUriAndAndValidParameters
     {
+        static HttpClient httpClient;
+
+        private static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -132,24 +133,20 @@ namespace EasyHttp.Specs.Specs
             response = httpClient.Get("http://localhost:16000/hello", new { Name = "true" });
         };
 
-
-        It should_return_dynamic_body_with_json_object = () =>
+        It shouldReturnDynamicBodyWithJsonObject = () =>
         {
             dynamic body = response.DynamicBody;
-
             string couchdb = body.Result;
-
             couchdb.ShouldEqual("Hello, true");
-
         };
-
-        static HttpClient httpClient;
-        static dynamic response;
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_GET_request_with_valid_uri_and__and_valid_parameters_using_segments
+    public class WhenMakingAGetRequestWithValidUriAndAndValidParametersUsingSegments
     {
+        static HttpClient httpClient;
+        static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -162,66 +159,52 @@ namespace EasyHttp.Specs.Specs
             response = httpClient.Get("http://localhost:16000/hello", new { Name = "true" });
         };
 
-
-        It should_return_dynamic_body_with_json_object = () =>
+        It shouldReturnDynamicBodyWithJsonObject = () =>
         {
             dynamic body = response.DynamicBody;
-
             string couchdb = body.Result;
-
             couchdb.ShouldEqual("Hello, true");
-
-        };
-
-        static HttpClient httpClient;
-        static dynamic response;
+        };        
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_GET_request_with_valid_uri_and_content_type_set_to_application_json
+    public class WhenMakingAGetRequestWithValidUriAndContentTypeSetToApplicationJson
     {
+
+        static HttpClient httpClient;
+        static HttpResponse response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
             httpClient.Request.Accept = HttpContentTypes.ApplicationJson;
-
         };
 
         Because of = () =>
         {
-
             response = httpClient.Get("http://localhost:16000/hello");
-
         };
 
-
-        It should_return_dynamic_body_with_json_object = () =>
+        It shouldReturnDynamicBodyWithJsonObject = () =>
         {
             dynamic body = response.DynamicBody;
-
             string result = body.Result;
-
             result.ShouldEqual("Hello, ");
-
         };
 
-
-        It should_return_static_body_with_json_object = () =>
+        It shouldReturnStaticBodyWithJsonObject = () =>
         {
             var couchInformation = response.StaticBody<ResultResponse>();
-
             couchInformation.Result.ShouldEqual("Hello, ");
-
         };
-
-        static HttpClient httpClient;
-        static HttpResponse response;
     }
 
-  
     [Subject("HttpClient")]
-    public class when_making_a_HEAD_request_with_valid_uri
+    public class WhenMakingAHeadRequestWithValidUri
     {
+        static HttpClient httpClient;
+        static HttpResponse response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -230,46 +213,38 @@ namespace EasyHttp.Specs.Specs
         Because of = () =>
         {
             response = httpClient.Head("http://localhost:16000");
-
         };
 
-        It should_return_OK_response  =
-            () => response.StatusDescription.ShouldEqual("OK");
-
-        static HttpClient httpClient;
-        static HttpResponse response;
+        It shouldReturnOkResponse  =
+            () => response.StatusDescription.ShouldEqual("OK");      
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_POST_request_with_valid_uri_and_valid_data_and_content_type_set_to_application_json
+    public class WhenMakingAPostRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJson
     {
+        static HttpClient httpClient;
+        static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
             httpClient.Request.Accept = HttpContentTypes.ApplicationJson;
-
         };
 
         Because of = () =>
         {
-
             response = httpClient.Post("http://localhost:16000/hello", new Customer() { Name = "Hadi"}, HttpContentTypes.ApplicationJson);
-
         };
 
-        It should_succeed = () =>
+        It shouldSucceed = () =>
         {
             string id = response.DynamicBody.Result;
-
             id.ShouldNotBeEmpty();
-        };
-
-        static HttpClient httpClient;
-        static dynamic response;
+        };        
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_POST_request_with_valid_uri_and_valid_data_and_content_type_set_to_application_json_and_parameters_as_segments
+    public class WhenMakingAPostRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJsonAndParametersAsSegments
     {
         Establish context = () =>
         {
@@ -280,15 +255,12 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () =>
         {
-
             response = httpClient.Post("http://localhost:16000/hello", new Customer() { Name = "Hadi" }, HttpContentTypes.ApplicationJson);
-
         };
 
-        It should_succeed = () =>
+        It shouldSucceed = () =>
         {
             string id = response.DynamicBody.Result;
-
             id.ShouldNotBeEmpty();
         };
 
@@ -297,8 +269,11 @@ namespace EasyHttp.Specs.Specs
     }
 
     [Subject("HttpClient")]
-    public class when_making_a_PUT_request_with_valid_uri_and_valid_data_and_content_type_set_to_application_json
+    public class WhenMakingAPutRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJson
     {
+        static HttpClient httpClient;
+        static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -309,24 +284,21 @@ namespace EasyHttp.Specs.Specs
         {
             response = httpClient.Put(string.Format("{0}/{1}", "http://localhost:16000", "hello"),
                           new Customer() { Name = "Put"}, HttpContentTypes.ApplicationJson);
-
         };
 
-
-        It should_succeed = () =>
+        It shouldSucceed = () =>
         {
             string result = response.DynamicBody.Result;
-
             result.ShouldNotBeEmpty();
         };
-
-        static HttpClient httpClient;
-        static dynamic response;
     }
 
     [Subject("HttpClient")]
-    public class when_making_requests_and_persisting_cookies
+    public class WhenMakingRequestsAndPersistingCookies
     {
+        static HttpClient httpClient;
+        static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -340,21 +312,19 @@ namespace EasyHttp.Specs.Specs
             response = httpClient.Get("http://localhost:16000/cookie/test");
         };
 
-
-        It should_send_returned_cookies = () =>
+        It shouldSendReturnedCookies = () =>
         {
             string cookieValue = response.DynamicBody.Value;
-
             cookieValue.ShouldEqual("test cookie");
         };
-
-        static HttpClient httpClient;
-        static dynamic response;
     }
 
     [Subject("HttpClient")]
-    public class when_making_requests_and_not_persisting_cookies
+    public class WhenMakingRequestsAndNotPersistingCookies
     {
+        static HttpClient httpClient;
+        static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -368,15 +338,10 @@ namespace EasyHttp.Specs.Specs
             response = httpClient.Get("http://localhost:16000/cookie/test");
         };
 
-
-        It should_not_send_returned_cookies = () =>
+        It shouldNotSendReturnedCookies = () =>
         {
             HttpStatusCode statusCode = response.StatusCode;
-
             statusCode.ShouldEqual(HttpStatusCode.NotFound);
-        };
-
-        static HttpClient httpClient;
-        static dynamic response;
+        };      
     }
 }

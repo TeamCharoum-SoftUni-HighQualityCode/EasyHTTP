@@ -11,7 +11,7 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.Specs
 {
     [Subject(typeof (HttpClient))]
-    public class when_sending_binary_data_as_put
+    public class WhenSendingBinaryDataAsPut
     {
         Establish context = () =>
         {
@@ -23,14 +23,10 @@ namespace EasyHttp.Specs.Specs
         
             var imageFile = Path.Combine("Helpers", "test.jpg");
 
-            httpClient.PutFile(string.Format("{0}/fileupload/test.jpg", "http://localhost:16000"),
-                                               imageFile,
-                                               "image/jpeg");
-
-            
+            httpClient.PutFile(string.Format("{0}/fileupload/test.jpg", "http://localhost:16000"),imageFile,"image/jpeg");           
         };
 
-        It should_upload_it_succesfully = () =>
+        It shouldUploadItSuccesfully = () =>
         {
             httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.Created);
         };
@@ -42,8 +38,13 @@ namespace EasyHttp.Specs.Specs
     }
 
     [Subject(typeof (HttpClient))]
-    public class when_sending_binary_data_as_multipart_post
+    public class WhenSendingBinaryDataAsMultipartPost
     {
+        static HttpClient httpClient;
+        static Guid guid;
+        static HttpResponse response;
+        static string rev;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -67,15 +68,9 @@ namespace EasyHttp.Specs.Specs
             
         };
 
-        It should_upload_it_succesfully = () =>
+        It shouldUploadItSuccesfully = () =>
         {
             httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.OK);
-        };
-
-        static HttpClient httpClient;
-        static Guid guid;
-        static HttpResponse response;
-        static string rev;
+        };      
     }
-
 }
