@@ -20,7 +20,6 @@
 
             private It shouldReturnStatusCodeOfOk =
                 () => httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.OK);
-
             private It shouldRedirect = () => httpClient.Response.Location.ShouldBeEmpty();
         }
 
@@ -40,7 +39,6 @@
 
             private It shouldReturnStatusCodeOfRedirect =
                 () => httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.Redirect);
-
             private It shouldRedirect = () => httpClient.Response.Location.ShouldEndWith("redirected");
         }
     }

@@ -8,6 +8,10 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlSegmentsWithOneParameterUsingExpandoObject
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        private static dynamic parameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlSegments = new ObjectToUrlSegments();
@@ -16,17 +20,16 @@ namespace EasyHttp.Specs.Specs
         };
 
         Because of = () => url = objectToUrlSegments.ParametersToUrl(parameters);
-
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("/test");
-
-        static ObjectToUrlSegments objectToUrlSegments;
-        private static dynamic parameters;
-        static string url;
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("/test");       
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_two_parameters_using_expando_object
+    public class WhenMakingUrlSegmentsWithTwoParametersUsingExpandoObject
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        private static dynamic parameters;
+        static string url;
+
         Establish context = () =>
         {
             objectToUrlSegments = new ObjectToUrlSegments();
@@ -36,130 +39,117 @@ namespace EasyHttp.Specs.Specs
         };
 
         Because of = () => url = objectToUrlSegments.ParametersToUrl(parameters);
+        It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("/test/1");
+    }
 
-        It should_have_the_correct_url_parameters = () => url.ShouldEqual("/test/1");
-
+    [Subject(typeof(HttpClient))]
+    public class WhenMakingUrlSegmentsWithOneParameterUsingAnonymousObject
+    {
         static ObjectToUrlSegments objectToUrlSegments;
-        private static dynamic parameters;
         static string url;
-    }
 
-    [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_one_parameter_using_anonymous_object
-    {
         Establish context = () =>
         {
-            _objectToUrlSegments = new ObjectToUrlSegments();
+            objectToUrlSegments = new ObjectToUrlSegments();
         };
 
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(new {Name = "test"});
-
-        It should_have_the_correct_url_segments = () => url.ShouldEqual("/test");
-
-        static ObjectToUrlSegments _objectToUrlSegments;
-        static string url;
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(new {Name = "test"});
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldEqual("/test");      
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_two_parameters_using_anonymous_object
+    public class WhenMakingUrlSegmentsWithTwoParametersUsingAnonymousObject
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        static string url;
+
         Establish context = () =>
         {
-            _objectToUrlSegments = new ObjectToUrlSegments();
+            objectToUrlSegments = new ObjectToUrlSegments();
         };
 
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(new { Name = "test", Id=1 });
-
-        It should_have_the_correct_url_segments = () => url.ShouldEqual("/test/1");
-
-        static ObjectToUrlSegments _objectToUrlSegments;
-        static string url;
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(new { Name = "test", Id=1 });
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldEqual("/test/1");      
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_it_should_encode_value
+    public class WhenMakingUrlSegmentsItShouldEncodeValue
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        static string url;
+
         Establish context = () =>
         {
-            _objectToUrlSegments = new ObjectToUrlSegments();
+            objectToUrlSegments = new ObjectToUrlSegments();
         };
 
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(new { Name = "test<>&;"});
-
-        It should_have_the_correct_url_segments = () => url.ShouldEqual("/test%3c%3e%26%3b");
-
-        static ObjectToUrlSegments _objectToUrlSegments;
-        static string url;
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(new { Name = "test<>&;"});
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldEqual("/test%3c%3e%26%3b");      
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_it_should_be_empty_when_passing_null
+    public class WhenMakingUrlSegmentsItShouldBeEmptyWhenPassingNull
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        static string url;
+
         Establish context = () =>
         {
-            _objectToUrlSegments = new ObjectToUrlSegments();
+            objectToUrlSegments = new ObjectToUrlSegments();
         };
 
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(null);
-
-        It should_have_the_correct_url_segments = () => url.ShouldBeEmpty();
-
-        static ObjectToUrlSegments _objectToUrlSegments;
-        static string url;
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(null);
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldBeEmpty();      
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_one_parameter_using_static_object
+    public class WhenMakingUrlSegmentsWithOneParameterUsingStaticObject
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        static string url;
+        static StaticObjectWithName parameter;
+
         Establish context = () =>
         {
-            _objectToUrlSegments = new ObjectToUrlSegments();
+            objectToUrlSegments = new ObjectToUrlSegments();
             parameter = new StaticObjectWithName() {Name="test"};
         };
 
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(parameter);
-
-        It should_have_the_correct_url_segments = () => url.ShouldEqual("/test");
-
-        static ObjectToUrlSegments _objectToUrlSegments;
-        static string url;
-        static StaticObjectWithName parameter;
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(parameter);
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldEqual("/test");        
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_two_parameters_using_static_object
+    public class WhenMakingUrlSegmentsWithTwoParametersUsingStaticObject
     {
+        static ObjectToUrlSegments objectToUrlSegments;
+        static string url;
+        static StaticObjectWithNameAndId parameter;
+
         Establish context = () =>
         {
-            _objectToUrlSegments = new ObjectToUrlSegments();
+            objectToUrlSegments = new ObjectToUrlSegments();
             parameter = new StaticObjectWithNameAndId() { Name = "test", Id=1 };
         };
 
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(parameter);
-
-        It should_have_the_correct_url_segments = () => url.ShouldEqual("/test/1");
-
-        static ObjectToUrlSegments _objectToUrlSegments;
-        static string url;
-        static StaticObjectWithNameAndId parameter;
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(parameter);
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldEqual("/test/1");      
     }
 
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_two_parameters_using_static_object_in_different_order
+    public class WhenMakingUrlSegmentsWithTwoParametersUsingStaticObjectInDifferentOrder
     {
-        Establish context = () =>
-        {
-            _objectToUrlSegments = new ObjectToUrlSegments();
-            parameter = new StaticObjectWithNameAndIdInDifferentOrder() { Name = "test", Id = 1 };
-        };
-
-        Because of = () => url = _objectToUrlSegments.ParametersToUrl(parameter);
-
-        It should_have_the_correct_url_segments = () => url.ShouldEqual("/1/test");
-
-        static ObjectToUrlSegments _objectToUrlSegments;
+        static ObjectToUrlSegments objectToUrlSegments;
         static string url;
         static StaticObjectWithNameAndIdInDifferentOrder parameter;
+
+        Establish context = () =>
+        {
+            objectToUrlSegments = new ObjectToUrlSegments();
+            parameter = new StaticObjectWithNameAndIdInDifferentOrder() { Name = "test", Id = 1 };
+        };
+        Because of = () => url = objectToUrlSegments.ParametersToUrl(parameter);
+        It shouldHaveTheCorrectUrlSegments = () => url.ShouldEqual("/1/test");     
     }
 
     public class StaticObjectWithNameAndIdInDifferentOrder
@@ -167,5 +157,4 @@ namespace EasyHttp.Specs.Specs
         public int Id { get; set; }
         public string Name { get; set; }
     }
-
 }
