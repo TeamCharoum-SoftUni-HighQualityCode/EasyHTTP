@@ -72,7 +72,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
         {
             if (tokens == null)
             {
-                throw new ArgumentNullException(nameof(tokens),"Token can not be null!");
+                throw new ArgumentNullException("tokens", "Token can not be null!");
             }
 
             var firstProperty = true;
@@ -122,7 +122,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
         {
             if (tokens == null)
             {
-                throw new ArgumentNullException(nameof(tokens), "Token can not be null!");
+                throw new ArgumentNullException("tokens", "Token can not be null!");
             }
 
             using (var writer = new StringWriter(CultureInfo.InvariantCulture))

@@ -1,7 +1,7 @@
-using System;
-
 namespace EasyHttp.Infrastructure
 {
+    using System;
+
     public class UriComposer
     {
         private readonly ObjectToUrlParameters objectToUrlParameters;
@@ -16,7 +16,7 @@ namespace EasyHttp.Infrastructure
         public string Compose(string baseuri, string uri, object query, bool parametersAreSegments)
         {
             var returnUri = uri;
-            if(!string.IsNullOrEmpty(baseuri))
+            if (!string.IsNullOrEmpty(baseuri))
             {
                 returnUri = baseuri.EndsWith("/") ? baseuri : string.Concat(baseuri,"/");
                 returnUri += uri.StartsWith("/", StringComparison.InvariantCulture) ? uri.Substring(1) : uri;

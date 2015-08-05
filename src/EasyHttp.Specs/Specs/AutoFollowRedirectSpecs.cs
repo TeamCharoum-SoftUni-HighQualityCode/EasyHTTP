@@ -1,30 +1,36 @@
-﻿using System.Net;
-using EasyHttp.Http;
-using Machine.Specifications;
-
-namespace EasyHttp.Specs.Specs
+﻿namespace EasyHttp.Specs.Specs
 {
+    using System.Net;
+    using EasyHttp.Http;
+    using Machine.Specifications;
+
     public class AutoFollowRedirectSpecs
     {
+        private static HttpClient httpClient;
+
         [Subject("HttpClient")]
-        public class when_making_a_GET_request_with_AutoRedirect_on
+        public class WhenMakingAGetRequestWithAutoRedirectOn
         {
-            private Establish context = () => { httpClient = new HttpClient(); };
+            private Establish context = () =>
+                {
+                    httpClient = new HttpClient();
+                };
 
             private Because of = () => httpClient.Get("http://localhost:16000/redirector");
 
-            private It should_return_status_code_of_OK =
+            private It shouldReturnStatusCodeOfOk =
                 () => httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.OK);
 
-            private It should_redirect = () => httpClient.Response.Location.ShouldBeEmpty();
-
-            private static HttpClient httpClient;
+            private It shouldRedirect = () => httpClient.Response.Location.ShouldBeEmpty();
         }
 
         [Subject("HttpClient")]
-        public class when_making_a_GET_request_with_AutoRedirect_off
+        public class WhenMakingAGetRequestWithAutoRedirectOff
         {
-            private Establish context = () => { httpClient = new HttpClient(); };
+            private Establish context = () =>
+                {
+                    httpClient = new HttpClient();
+                };
 
             private Because of = () =>
             {
@@ -32,12 +38,10 @@ namespace EasyHttp.Specs.Specs
                 httpClient.Get("http://localhost:16000/redirector");
             };
 
-            private It should_return_status_code_of_Redirect =
+            private It shouldReturnStatusCodeOfRedirect =
                 () => httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.Redirect);
 
-            private It should_redirect = () => httpClient.Response.Location.ShouldEndWith("redirected");
-
-            private static HttpClient httpClient;
+            private It shouldRedirect = () => httpClient.Response.Location.ShouldEndWith("redirected");
         }
     }
 }

@@ -6,7 +6,7 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.Specs
 {
     [Subject(typeof(HttpClient))]
-    public class when_making_url_segments_with_one_parameter_using_expando_object
+    public class WhenMakingUrlSegmentsWithOneParameterUsingExpandoObject
     {
         Establish context = () =>
         {
