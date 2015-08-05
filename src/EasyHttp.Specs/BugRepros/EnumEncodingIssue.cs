@@ -27,8 +27,7 @@ namespace EasyHttp.Specs.BugRepros
 
         Because of = () =>
         {
-            var data = new Foo {Baz = Bar.First};
-
+            var data = Bar.First;
             result = encoder.Encode(data, "application/vnd.fubar+json");
         };
 
@@ -36,10 +35,5 @@ namespace EasyHttp.Specs.BugRepros
         {
             result.Length.ShouldBeGreaterThan(0);
         };       
-    }
- 
-    public class Foo
-    {
-        public Bar Baz { get; set; }
-    }     
+    }  
 }

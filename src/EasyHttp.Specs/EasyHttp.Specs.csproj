@@ -93,6 +93,10 @@
     <Compile Include="BugRepros\CustomPropertyNameIssue.cs" />
     <Compile Include="BugRepros\DecodingIssues.cs" />
     <Compile Include="BugRepros\EnumEncodingIssue.cs" />
+    <Compile Include="BugRepros\DetailsInformation.cs" />
+    <Compile Include="BugRepros\AddressComponent.cs" />
+    <Compile Include="BugRepros\Location.cs" />
+    <Compile Include="BugRepros\Response.cs" />
     <Compile Include="BugRepros\UploadFileIssue.cs" />
     <Compile Include="Helpers\CookieService.cs" />
     <Compile Include="Helpers\DataSpecificationBase.cs" />

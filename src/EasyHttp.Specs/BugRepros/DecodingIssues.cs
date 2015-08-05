@@ -104,7 +104,7 @@ namespace EasyHttp.Specs.BugRepros
         static DefaultDecoder decoder;
         static dynamic outputDynamic;
         static string input;
-        static PlaceResponse<PlaceDetail> outputStatic;
+        static PlaceResponse<DetailsInformation> outputStatic;
 
         Establish context = () =>
         {
@@ -131,7 +131,7 @@ namespace EasyHttp.Specs.BugRepros
         Because of = () =>
         {
             outputDynamic = decoder.DecodeToDynamic(input, HttpContentTypes.ApplicationJson);
-            outputStatic = decoder.DecodeToStatic<PlaceResponse<PlaceDetail>>(input, HttpContentTypes.ApplicationJson);
+            outputStatic = decoder.DecodeToStatic<PlaceResponse<DetailsInformation>>(input, HttpContentTypes.ApplicationJson);
         }; 
         
         It shouldDecodeCorrectlyToDynamicBody = () =>
@@ -140,7 +140,7 @@ namespace EasyHttp.Specs.BugRepros
             formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };
 
-        It shouldDrecodeCorrectlyToStaticBody = () => outputStatic.result.formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");                 
+        It shouldDrecodeCorrectlyToStaticBody = () => outputStatic.Result.FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");                 
     }
 
     public class ResponseThatContainsUmlats
@@ -162,47 +162,8 @@ namespace EasyHttp.Specs.BugRepros
         };        
     }
 
-    public class PlaceResponse<T>
-    {
-        public string status { get; set; }
-        public T result { get; set; }
-        public string[] html_attributions { get; set; }
-    }
-
-    public class PlaceLocation
-    {
-        public double lat { get; set; }
-        public double lng { get; set; }
-    }
-
     public class PlaceGeometry
     {
-        public PlaceLocation location { get; set; }
-    }
-
-    public class PlaceDetail
-    {
-        public string name { get; set; }
-
-        public string formatted_address { get; set; }
-        public string formatted_phone_number { get; set; }
-
-        public string icon { get; set; }
-        public string id { get; set; }
-        public PlaceAddressComponent[] address_components { get; set; }
-
-        public PlaceGeometry geometry { get; set; }
-        public string reference { get; set; }
-        public string[] types { get; set; }
-        public string url { get; set; }
-        public string vicinity { get; set; }
-        public string website { get; set; }
-    }
-
-    public class PlaceAddressComponent
-    {
-        public string[] types { get; set; }
-        public string long_name { get; set; }
-        public string short_name { get; set; }
+        public Location Location { get; set; }
     }
 }

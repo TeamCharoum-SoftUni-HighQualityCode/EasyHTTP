@@ -10,6 +10,9 @@ namespace EasyHttp.Specs.BugRepros
 
     public class FileUploadWasFailingBecauseFieldnameForFileFieldWasNotBeingSet
     {
+        static HttpClient httpClient;
+        static HttpResponse response;
+
         Establish context = () =>
             {
                 httpClient = new HttpClient();
@@ -18,27 +21,15 @@ namespace EasyHttp.Specs.BugRepros
         Because of = () =>
             {
 
-                var filename = Path.Combine("Helpers", "test.xml"); 
-                
-
+                var filename = Path.Combine("Helpers", "test.xml");                 
                 IDictionary<string, object> data = new Dictionary<string, object>();
-
-
                 data.Add("runTest", " Run Test ");
-
                 IList<FileData> files = new List<FileData>();
 
                 files.Add(new FileData() { FieldName = "file", ContentType = "text/xml", Filename = filename });
-
                 httpClient.Post("https://loandelivery.intgfanniemae.com/mismoxtt/mismoValidator.do", data, files);
-
                 response = httpClient.Response;
             };
-
-
-        It shouldSayThatOperationWasSuccessful = () => response.RawText.ShouldNotContain("Please select a file to test.");
-        
-        static HttpClient httpClient;
-        static HttpResponse response;
+        It shouldSayThatOperationWasSuccessful = () => response.RawText.ShouldNotContain("Please select a file to test.");            
     }
 }
