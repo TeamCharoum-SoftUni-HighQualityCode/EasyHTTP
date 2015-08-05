@@ -45,11 +45,18 @@ namespace EasyHttp.Specs.BugRepros
 {
     public class WhenDecodingDateInIso8601Format
     {
+        public class User
+        {
+            public DateTime? LockedOutUntil { get; set; }
+        }
+
+        static DefaultDecoder decoder;
+        static User outputStatic;
+        static string input;
+
         Establish context = () =>
         {
             input = "{\"LockedOutUntil\":\"/Date(1289073014137)/\"}";
-
-
             IEnumerable<IDataReader> readers = new List<IDataReader> { new 
                 JsonReader(new DataReaderSettings(DefaultEncoderDecoderConfiguration.CombinedResolverStrategy(), 
                     new MSAjaxDateFilter(),
@@ -57,9 +64,6 @@ namespace EasyHttp.Specs.BugRepros
                 ), "application/.*json") };
 
             decoder = new DefaultDecoder(new RegExBasedDataReaderProvider(readers));
-
-
-
         };
 
         Because of = () =>
@@ -67,51 +71,41 @@ namespace EasyHttp.Specs.BugRepros
             outputStatic = decoder.DecodeToStatic<User>(input, HttpContentTypes.ApplicationJson);
         };
 
-        It shouldDecodeCorrectlyToDynamicBody = () => outputStatic.LockedOutUntil.ShouldEqual(new DateTime(2010, 11, 06, 19, 50, 14, 137));
-
-        static DefaultDecoder decoder;
-        static User outputStatic;
-        static string input;
-
-        public class User
-        {
-            public DateTime? LockedOutUntil { get; set; }
-        }
-
+        It shouldDecodeCorrectlyToDynamicBody = () => outputStatic.LockedOutUntil.ShouldEqual(new DateTime(2010, 11, 06, 19, 50, 14, 137));            
     }
 
     public class WhenDecodingAnObjectThatIsAnArrayToDynamic
     {
+        static string input;
+        static DefaultDecoder decoder;
+        static dynamic output;
+
         Establish context = () => 
         {
             input = "[{\"intAuthorID\":\"8\",\"strText\":\"test1\"},{\"intAuthorID\":\"5\",\"strText\":\"This message\"}]";
-
             IEnumerable<IDataReader> readers = new List<IDataReader> { new JsonReader(new DataReaderSettings(DefaultEncoderDecoderConfiguration.CombinedResolverStrategy()), "application/.*json") };
-
             decoder = new DefaultDecoder(new RegExBasedDataReaderProvider(readers));
         };
 
-
         Because of = () =>
         {
-
             output = decoder.DecodeToDynamic(input, HttpContentTypes.ApplicationJson);
         };
-
 
         It shouldDecodeCorrectly = () =>
         {
             string authorId = output[0].intAuthorID;
             authorId.ShouldEqual("8");
-        };
-
-        static string input;
-        static DefaultDecoder decoder;
-        static dynamic output;
+        };       
     }
 
     public class WhenDecodingFieldsWithUnderscores
     {
+        static DefaultDecoder decoder;
+        static dynamic outputDynamic;
+        static string input;
+        static PlaceResponse<PlaceDetail> outputStatic;
+
         Establish context = () =>
         {
             input =
@@ -146,22 +140,17 @@ namespace EasyHttp.Specs.BugRepros
             formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };
 
-        It shouldDrecodeCorrectlyToStaticBody = () => outputStatic.result.formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");     
-        
-        static DefaultDecoder decoder;
-        static dynamic outputDynamic;
-        static string input;
-        static PlaceResponse<PlaceDetail> outputStatic;
+        It shouldDrecodeCorrectlyToStaticBody = () => outputStatic.result.formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");                 
     }
 
     public class ResponseThatContainsUmlats
     {
+        static HttpResponse response;
+
         Because of = () =>
         {
             var http = new HttpClient();
-
-            http.Request.Accept = HttpContentTypes.ApplicationJson;
-            
+            http.Request.Accept = HttpContentTypes.ApplicationJson;            
             response = http.Get("https://api.github.com/users/thecodejunkie");
         };
 
@@ -170,9 +159,7 @@ namespace EasyHttp.Specs.BugRepros
             var user = response.DynamicBody;
             string username = user.name;
             username.ShouldEqual("Andreas Håkansson");
-        };
-
-        static HttpResponse response;
+        };        
     }
 
     public class PlaceResponse<T>
@@ -186,7 +173,6 @@ namespace EasyHttp.Specs.BugRepros
     {
         public double lat { get; set; }
         public double lng { get; set; }
-
     }
 
     public class PlaceGeometry
@@ -219,5 +205,4 @@ namespace EasyHttp.Specs.BugRepros
         public string long_name { get; set; }
         public string short_name { get; set; }
     }
-
 }

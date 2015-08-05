@@ -93,6 +93,7 @@ namespace EasyHttp.Specs.Specs
         static string rev;
         static Guid guid;
     }
+
     [Subject("HttpClient")]
     public class WhenMakingAGetRequestWithValidUri
     {
@@ -108,18 +109,15 @@ namespace EasyHttp.Specs.Specs
         Because of = () =>
         {
             httpResponse = httpClient.Get("http://localhost:16000");
-
         };
 
-        It shouldReturnBodyWithRawtext =
-            () => httpResponse.RawText.ShouldNotBeEmpty();    
+        It shouldReturnBodyWithRawtext = () => httpResponse.RawText.ShouldNotBeEmpty();    
     }
 
     [Subject("HttpClient")]
     public class WhenMakingAGetRequestWithValidUriAndAndValidParameters
     {
         static HttpClient httpClient;
-
         private static dynamic response;
 
         Establish context = () =>
@@ -246,6 +244,9 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAPostRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJsonAndParametersAsSegments
     {
+        static HttpClient httpClient;
+        static dynamic response;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -262,10 +263,7 @@ namespace EasyHttp.Specs.Specs
         {
             string id = response.DynamicBody.Result;
             id.ShouldNotBeEmpty();
-        };
-
-        static HttpClient httpClient;
-        static dynamic response;
+        };    
     }
 
     [Subject("HttpClient")]

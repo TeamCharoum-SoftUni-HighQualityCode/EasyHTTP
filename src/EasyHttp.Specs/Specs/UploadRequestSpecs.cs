@@ -13,16 +13,19 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof (HttpClient))]
     public class WhenSendingBinaryDataAsPut
     {
+        static HttpClient httpClient;
+        static Guid guid;
+        static HttpResponse response;
+        static string rev;
+
         Establish context = () =>
         {
             httpClient = new HttpClient();
         };
 
         Because of = () =>
-        {
-        
+        {     
             var imageFile = Path.Combine("Helpers", "test.jpg");
-
             httpClient.PutFile(string.Format("{0}/fileupload/test.jpg", "http://localhost:16000"),imageFile,"image/jpeg");           
         };
 
@@ -30,11 +33,6 @@ namespace EasyHttp.Specs.Specs
         {
             httpClient.Response.StatusCode.ShouldEqual(HttpStatusCode.Created);
         };
-
-        static HttpClient httpClient;
-        static Guid guid;
-        static HttpResponse response;
-        static string rev;
     }
 
     [Subject(typeof (HttpClient))]
@@ -52,9 +50,7 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () =>
         {
-        
-            var imageFile = Path.Combine("Helpers", "test.jpg");
-        
+            var imageFile = Path.Combine("Helpers", "test.jpg");       
             IDictionary<string, object> data = new Dictionary<string, object>();
 
             data.Add("email", "hadi@hadi.com");
@@ -64,8 +60,7 @@ namespace EasyHttp.Specs.Specs
 
             files.Add(new FileData() { FieldName = "image1", ContentType = "image/jpeg", Filename = imageFile});
             files.Add(new FileData() { FieldName = "image2", ContentType = "image/jpeg", Filename = imageFile });
-            httpClient.Post(string.Format("{0}/fileupload", "http://localhost:16000"), data, files);
-            
+            httpClient.Post(string.Format("{0}/fileupload", "http://localhost:16000"), data, files);            
         };
 
         It shouldUploadItSuccesfully = () =>

@@ -15,6 +15,9 @@ namespace EasyHttp.Specs.BugRepros
     [Subject("Custom Decoding")]
     public class WhenDecodingAnObjectWithCustomNamingOfProperty
     {
+        static IDecoder decoder;
+        static CustomNaming obj;
+
         static CombinedResolverStrategy CombinedResolverStrategy()
         {
             return new CombinedResolverStrategy(
@@ -28,8 +31,7 @@ namespace EasyHttp.Specs.BugRepros
         }
         Establish context = () =>
         {
-            IEnumerable<IDataReader> readers = new List<IDataReader> { new JsonReader(new DataReaderSettings(CombinedResolverStrategy()), HttpContentTypes.ApplicationJson) };
-            
+            IEnumerable<IDataReader> readers = new List<IDataReader> { new JsonReader(new DataReaderSettings(CombinedResolverStrategy()), HttpContentTypes.ApplicationJson) };            
             decoder = new DefaultDecoder(new RegExBasedDataReaderProvider(readers));
         };
 
@@ -41,15 +43,15 @@ namespace EasyHttp.Specs.BugRepros
         It shouldDecodeTakingIntoAccountCustomPropertyName = () =>
         {
             obj.PropertyName.ShouldEqual("def");
-        };
-
-        static IDecoder decoder;
-        static CustomNaming obj;
+        };     
     }
     
     [Subject("Custom Encoding")]
     public class WhenEncodingAnObjectWithCustomNamingOfProperty
     {
+        static IEncoder encoder;
+        static byte[] encoded;
+
         static CombinedResolverStrategy CombinedResolverStrategy()
         {
             return new CombinedResolverStrategy(
@@ -65,14 +67,12 @@ namespace EasyHttp.Specs.BugRepros
         Establish context = () =>
         {    
             IEnumerable<IDataWriter> writers = new List<IDataWriter> { new JsonWriter(new DataWriterSettings(CombinedResolverStrategy()), HttpContentTypes.ApplicationJson) };
-
             encoder = new DefaultEncoder(new RegExBasedDataWriterProvider(writers));
         };
 
         Because of = () =>
         {
             var customObject = new CustomNamedObject {UpperPropertyName = "someValue"};
-
             encoded = encoder.Encode(customObject, HttpContentTypes.ApplicationJson);
         };
 
@@ -80,10 +80,7 @@ namespace EasyHttp.Specs.BugRepros
         {
             var str = System.Text.Encoding.UTF8.GetString(encoded);
             str.ShouldContain("upperPropertyName");
-        };
-
-        static IEncoder encoder;
-        static byte[] encoded;
+        };     
     }
 
     public class CustomNamedObject

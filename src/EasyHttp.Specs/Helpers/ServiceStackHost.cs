@@ -9,16 +9,16 @@ namespace EasyHttp.Specs.Helpers
 
         public override void Configure(Funq.Container container)
         {
-            Routes.Add<Hello>("/hello")
+            this.Routes.Add<Hello>("/hello")
                   .Add<Hello>("/hello/{Name}");
 
-            Routes.Add<Files>("/fileupload/{Name}")
+            this.Routes.Add<Files>("/fileupload/{Name}")
                   .Add<Files>("/fileupload");
 
-            Routes.Add<CookieInfo>("/cookie")
+            this.Routes.Add<CookieInfo>("/cookie")
                   .Add<CookieInfo>("/cookie/{Name}");
 
-            Routes.Add<Redirect>("/redirector")
+            this.Routes.Add<Redirect>("/redirector")
                   .Add<Redirect>("/redirector/redirected");
         }
     }
