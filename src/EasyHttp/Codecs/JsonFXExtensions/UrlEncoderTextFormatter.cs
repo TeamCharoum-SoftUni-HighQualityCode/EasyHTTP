@@ -62,13 +62,19 @@ namespace EasyHttp.Codecs.JsonFXExtensions
     using System.Globalization;
     using System.IO;
     using System.Web;
+
     using JsonFx.Model;
     using JsonFx.Serialization;
-    
+
     public class UrlEncoderTextFormatter : ITextFormatter<ModelTokenType>
     {
         public void Format(IEnumerable<Token<ModelTokenType>> tokens, TextWriter writer)
         {
+            if (tokens == null)
+            {
+                throw new ArgumentNullException(nameof(tokens),"Token can not be null!");
+            }
+
             var firstProperty = true;
 
             foreach (var token in tokens)
@@ -107,13 +113,18 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 
                         break;
                     default:
-                        throw new ArgumentOutOfRangeException();
+                        throw new ArgumentException("Incorrect token type!");
                 }
             }
         }
 
         public string Format(IEnumerable<Token<ModelTokenType>> tokens)
         {
+            if (tokens == null)
+            {
+                throw new ArgumentNullException(nameof(tokens), "Token can not be null!");
+            }
+
             using (var writer = new StringWriter(CultureInfo.InvariantCulture))
             {
                 this.Format(tokens, writer);

@@ -58,7 +58,9 @@
 namespace EasyHttp.Codecs.JsonFXExtensions
 {
     using System.Collections.Generic;
+
     using EasyHttp.Http;
+
     using JsonFx.Model;
     using JsonFx.Serialization;
 
@@ -71,7 +73,7 @@ namespace EasyHttp.Codecs.JsonFXExtensions
         {
             this.contentTypes = contentTypes;
         }
-        
+
         public override IEnumerable<string> ContentType
         {
             get
@@ -85,14 +87,17 @@ namespace EasyHttp.Codecs.JsonFXExtensions
 
                     yield break;
                 }
-                
+
                 yield return HttpContentTypes.ApplicationXWwwFormUrlEncoded;
             }
         }
 
         public override IEnumerable<string> FileExtension
         {
-            get { return new List<string>(); }
+            get
+            {
+                return new List<string>();
+            }
         }
 
         protected override ITextFormatter<ModelTokenType> GetFormatter()
