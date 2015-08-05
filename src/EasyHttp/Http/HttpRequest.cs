@@ -320,60 +320,60 @@ namespace EasyHttp.Http
         }
 
 
-        public HttpWebRequest PrepareRequest()
-        {
-            this.httpWebRequest = (HttpWebRequest)WebRequest.Create(this.Uri);
-            this.httpWebRequest.AllowAutoRedirect = this.AllowAutoRedirect;
-            this.SetupHeader();
+        //public HttpWebRequest PrepareRequest()
+        //{
+        //    this.httpWebRequest = (HttpWebRequest)WebRequest.Create(this.Uri);
+        //    this.httpWebRequest.AllowAutoRedirect = this.AllowAutoRedirect;
+        //    this.SetupHeader();
 
-            this.SetupBody();
+        //    this.SetupBody();
 
-            return this.httpWebRequest;
-        }
+        //    return this.httpWebRequest;
+        //}
 
-        void SetupClientCertificates()
-        {
-            if (this.ClientCertificates == null || this.ClientCertificates.Count == 0)
-                return;
+        //void SetupClientCertificates()
+        //{
+        //    if (this.ClientCertificates == null || this.ClientCertificates.Count == 0)
+        //        return;
 
-            this.httpWebRequest.ClientCertificates.AddRange(this.ClientCertificates);
-        }
+        //    this.httpWebRequest.ClientCertificates.AddRange(this.ClientCertificates);
+        //}
 
-        void SetupAuthentication()
-        {
-            this.SetupClientCertificates();
+        //void SetupAuthentication()
+        //{
+        //    this.SetupClientCertificates();
 
-            if (this.ForceBasicAuthentication)
-            {
-                string authInfo = this.Username + ":" + this.Password;
-                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-                this.httpWebRequest.Headers["Authorization"] = "Basic " + authInfo;
-            }
-            else
-            {
-                var networkCredential = new NetworkCredential(this.Username, this.Password);
-                this.httpWebRequest.Credentials = networkCredential;
-            }
-        }
+        //    if (this.ForceBasicAuthentication)
+        //    {
+        //        string authInfo = this.Username + ":" + this.Password;
+        //        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+        //        this.httpWebRequest.Headers["Authorization"] = "Basic " + authInfo;
+        //    }
+        //    else
+        //    {
+        //        var networkCredential = new NetworkCredential(this.Username, this.Password);
+        //        this.httpWebRequest.Credentials = networkCredential;
+        //    }
+        //}
 
-        public void SetCacheControlToNoCache()
-        {
-            this.cachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-        }
+        //public void SetCacheControlToNoCache()
+        //{
+        //    this.cachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
+        //}
 
-        public void SetCacheControlWithMaxAge(TimeSpan maxAge)
-        {
-            this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, maxAge);
-        }
+        //public void SetCacheControlWithMaxAge(TimeSpan maxAge)
+        //{
+        //    this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, maxAge);
+        //}
 
-        public void SetCacheControlWithMaxAgeAndMaxStale(TimeSpan maxAge, TimeSpan maxStale)
-        {
-            this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMaxStale, maxAge, maxStale);
-        }
+        //public void SetCacheControlWithMaxAgeAndMaxStale(TimeSpan maxAge, TimeSpan maxStale)
+        //{
+        //    this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMaxStale, maxAge, maxStale);
+        //}
 
-        public void SetCacheControlWithMaxAgeAndMinFresh(TimeSpan maxAge, TimeSpan minFresh)
-        {
-            this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMinFresh, maxAge, minFresh);
-        }
+        //public void SetCacheControlWithMaxAgeAndMinFresh(TimeSpan maxAge, TimeSpan minFresh)
+        //{
+        //    this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMinFresh, maxAge, minFresh);
+        //}
     }
 }
