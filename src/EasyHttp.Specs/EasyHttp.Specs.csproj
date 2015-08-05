@@ -93,7 +93,11 @@
     <Compile Include="BugRepros\DecodingIssues.cs" />
     <Compile Include="BugRepros\EnumEncodingIssue.cs" />
     <Compile Include="BugRepros\UploadFileIssue.cs" />
+    <Compile Include="Helpers\CookieService.cs" />
     <Compile Include="Helpers\DataSpecificationBase.cs" />
+    <Compile Include="Helpers\FilesService.cs" />
+    <Compile Include="Helpers\HelloService.cs" />
+    <Compile Include="Helpers\RedirectorService.cs" />
     <Compile Include="Helpers\ServiceStackHost.cs" />
     <Compile Include="Specs\AutoFollowRedirectSpecs.cs" />
     <Compile Include="Specs\DynamicObjectToUrlSegmentsSpecs.cs" />
