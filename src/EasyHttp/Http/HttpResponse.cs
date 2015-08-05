@@ -55,6 +55,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 #endregion
+
 namespace EasyHttp.Http
 {
     using System;
@@ -125,7 +126,6 @@ namespace EasyHttp.Http
             }
         }
 
-
         public dynamic DynamicBody
         {
             get
@@ -191,7 +191,7 @@ namespace EasyHttp.Http
                 }
                 else
                 {
-                    var encoding = string.IsNullOrEmpty(this.CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(CharacterSet);
+                    var encoding = string.IsNullOrEmpty(this.CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(this.CharacterSet);
                     using (var reader = new StreamReader(stream, encoding))
                     {
                         this.RawText = reader.ReadToEnd();
@@ -202,34 +202,34 @@ namespace EasyHttp.Http
 
         private void GetHeaders()
         {
-            CharacterSet = response.CharacterSet;
-            ContentType = response.ContentType;
-            StatusCode = response.StatusCode;
-            StatusDescription = response.StatusDescription;
-            Cookies = response.Cookies;
-            ContentEncoding = response.ContentEncoding;
-            ContentLength = response.ContentLength;
-            Date = DateTime.Now;
-            LastModified = response.LastModified;
-            Server = response.Server;
+            this.CharacterSet = this.response.CharacterSet;
+            this.ContentType = this.response.ContentType;
+            this.StatusCode = this.response.StatusCode;
+            this.StatusDescription = this.response.StatusDescription;
+            this.Cookies = this.response.Cookies;
+            this.ContentEncoding = this.response.ContentEncoding;
+            this.ContentLength = this.response.ContentLength;
+            this.Date = DateTime.Now;
+            this.LastModified = this.response.LastModified;
+            this.Server = this.response.Server;
 
-            if (!String.IsNullOrEmpty(GetHeader("Age")))
+            if (!string.IsNullOrEmpty(this.GetHeader("Age")))
             {
-                Age = Convert.ToInt32(GetHeader("Age"));
+                this.Age = Convert.ToInt32(this.GetHeader("Age"));
             }
 
-            ContentLanguage = GetHeader("Content-Language");
-            ContentLocation = GetHeader("Content-Location");
-            ContentDisposition = GetHeader("Content-Disposition");
-            ETag = GetHeader("ETag");
-            Location = GetHeader("Location");
+            this.ContentLanguage = this.GetHeader("Content-Language");
+            this.ContentLocation = this.GetHeader("Content-Location");
+            this.ContentDisposition = this.GetHeader("Content-Disposition");
+            this.ETag = this.GetHeader("ETag");
+            this.Location = this.GetHeader("Location");
 
-            if (!String.IsNullOrEmpty(GetHeader("Expires")))
+            if (!string.IsNullOrEmpty(this.GetHeader("Expires")))
             {
                 DateTime expires;
-                if (DateTime.TryParse(GetHeader("Expires"), out expires))
+                if (DateTime.TryParse(this.GetHeader("Expires"), out expires))
                 {
-                    Expires = expires;
+                    this.Expires = expires;
                 }
             }
 
@@ -237,16 +237,14 @@ namespace EasyHttp.Http
             //   public HttpMethod Allow { get; private set; }
             //   public CacheControl CacheControl { get; private set; }
             //   public CacheControl Pragma { get; private set; }
-
-
-            RawHeaders = response.Headers;
+            this.RawHeaders = this.response.Headers;
         }
 
-        string GetHeader(string header)
+        private string GetHeader(string header)
         {
-            var headerValue = response.GetResponseHeader(header);
+            var headerValue = this.response.GetResponseHeader(header);
 
-            return headerValue.Replace("\"", "");
+            return headerValue.Replace("\"", string.Empty);
         }
     }
 }
