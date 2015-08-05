@@ -4,21 +4,21 @@ namespace EasyHttp.Specs.Helpers
 {
     public class DataSpecificationBase : IAssemblyContext
     {
-        private ServiceStackHost _appHost;
-        private int _port;
+        private ServiceStackHost appHost;
+        private int port;
 
         void IAssemblyContext.OnAssemblyComplete()
         {
-            _appHost.Dispose();    
+            this.appHost.Dispose();    
         }
 
         void IAssemblyContext.OnAssemblyStart()
         {
-            _port = 16000;
-            var listeningOn = "http://localhost:" + _port + "/";
-            _appHost = new ServiceStackHost();
-            _appHost.Init();
-            _appHost.Start(listeningOn); 
+            this.port = 16000;
+            var listeningOn = "http://localhost:" + this.port + "/";
+            this.appHost = new ServiceStackHost();
+            this.appHost.Init();
+            this.appHost.Start(listeningOn); 
         }
 
     }
