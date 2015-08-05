@@ -43,7 +43,7 @@ using Machine.Specifications;
 
 namespace EasyHttp.Specs.BugRepros
 {
-    public class when_decoding_date_in_iso8601_format
+    public class WhenDecodingDateInIso8601Format
     {
         Establish context = () =>
         {
@@ -67,7 +67,7 @@ namespace EasyHttp.Specs.BugRepros
             outputStatic = decoder.DecodeToStatic<User>(input, HttpContentTypes.ApplicationJson);
         };
 
-        It should_decode_correctly_to_dynamic_body = () => outputStatic.LockedOutUntil.ShouldEqual(new DateTime(2010, 11, 06, 19, 50, 14, 137));
+        It shouldDecodeCorrectlyToDynamicBody = () => outputStatic.LockedOutUntil.ShouldEqual(new DateTime(2010, 11, 06, 19, 50, 14, 137));
 
         static DefaultDecoder decoder;
         static User outputStatic;
@@ -80,7 +80,7 @@ namespace EasyHttp.Specs.BugRepros
 
     }
 
-    public class when_decoding_an_object_that_is_an_array_to_dynamic
+    public class WhenDecodingAnObjectThatIsAnArrayToDynamic
     {
         Establish context = () => 
         {
@@ -99,7 +99,7 @@ namespace EasyHttp.Specs.BugRepros
         };
 
 
-        It should_decode_correctly = () =>
+        It shouldDecodeCorrectly = () =>
         {
             string authorId = output[0].intAuthorID;
             authorId.ShouldEqual("8");
@@ -110,44 +110,51 @@ namespace EasyHttp.Specs.BugRepros
         static dynamic output;
     }
 
-    public class when_decoding_fields_with_underscores
+    public class WhenDecodingFieldsWithUnderscores
     {
         Establish context = () =>
         {
             input =
-                "{\"html_attributions\": [],\"result\": {\"address_components\": [{\"long_name\": \"Church Street\",\"short_name\": \"Church Street\",\"types\": [\"route\"]},{\"long_name\": \"Wilmslow\",\"short_name\": \"Wilmslow\",\"types\": [\"locality\",\"political\"]},{\"long_name\": \"GB\",\"short_name\": \"GB\",\"types\": [\"country\",\"political\"]},{\"long_name\": \"SK9 1\",\"short_name\": \"SK9 1\",\"types\": [\"postal_code\"]}],\"formatted_address\": \"Church Street, Wilmslow, SK9 1, United Kingdom\",\"formatted_phone_number\": \"01625 538831\",\"geometry\": {\"location\": {\"lat\": 53.328908,\"lng\": -2.229191}},\"icon\": \"http://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png\",\"id\": \"51155a69bc03041b926e44f03a5bbe9feafb5035\",\"international_phone_number\": \"+44 1625 538831\",\"name\": \"Waitrose\",\"reference\": \"CmRfAAAAUZ4dYk9VpNJd1mFxa970TxVGgp9QTGeEa1BaU_wTWdTHNLCcB-9YyNu5LjgIewxo_oOna0KI9f_Z-Xff4CxvTf9wFHTHgE1wRGyCLLJo2BPjkGHo5Qem-Z-2_FKiY3gmEhA_Qs0jcQyFgVEs1BZAt_bdGhRerV30JziD2x7ZOMgxQTKlnH0yAQ\",\"types\": [\"grocery_or_supermarket\",\"food\",\"store\",\"establishment\"],\"url\": \"http://maps.google.com/maps/place?cid=14979720525476796445\",\"vicinity\": \"Church Street, Wilmslow\",\"website\": \"http://www.waitrose.com/wilmslow\"},\"status\": \"OK\"}";
+                "{\"html_attributions\": [],\"result\": {\"address_components\":" + " "
+                + "[{\"long_name\": \"Church Street\",\"short_name\": \"Church Street\",\"types\":"
+                + " [\"route\"]},{\"long_name\": \"Wilmslow\",\"short_name\": \"Wilmslow\",\"types\":"
+                + " [\"locality\",\"political\"]},{\"long_name\": \"GB\",\"short_name\": \"GB\",\"types\": "
+                + "[\"country\",\"political\"]},{\"long_name\": \"SK9 1\",\"short_name\": \"SK9 1\",\"types\":"
+                + " [\"postal_code\"]}],\"formatted_address\":"
+                + " \"Church Street, Wilmslow, SK9 1, United Kingdom\",\"formatted_phone_number\":"
+                + " \"01625 538831\",\"geometry\": {\"location\": {\"lat\": 53.328908,\"lng\": -2.229191}},\"icon\":"
+                + " \"http://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png\",\"id\": "
+                + "\"51155a69bc03041b926e44f03a5bbe9feafb5035\",\"international_phone_number\": \"+44 1625 538831\",\"name\":"
+                + " \"Waitrose\",\"reference\":"
+                + " \"CmRfAAAAUZ4dYk9VpNJd1mFxa970TxVGgp9QTGeEa1BaU_wTWdTHNLCcB-9YyNu5LjgIewxo_oOna0KI9f_Z-Xff4CxvTf9wFHTHgE1wRGyCLLJo2BPjkGHo5Qem-Z-2_FKiY3gmEhA_Qs0jcQyFgVEs1BZAt_bdGhRerV30JziD2x7ZOMgxQTKlnH0yAQ\",\"types\":"
+                + " [\"grocery_or_supermarket\",\"food\",\"store\",\"establishment\"],\"url\": \"http://maps.google.com/maps/place?cid=14979720525476796445\",\"vicinity\": \"Church Street, Wilmslow\",\"website\": "
+                + "\"http://www.waitrose.com/wilmslow\"},\"status\": \"OK\"}";
 
             IEnumerable<IDataReader> readers = new List<IDataReader> { new JsonReader(new DataReaderSettings(DefaultEncoderDecoderConfiguration.CombinedResolverStrategy()), "application/.*json") };
-
-            decoder = new DefaultDecoder(new RegExBasedDataReaderProvider(readers));
-
-       
-      
+            decoder = new DefaultDecoder(new RegExBasedDataReaderProvider(readers));      
         };
 
         Because of = () =>
         {
             outputDynamic = decoder.DecodeToDynamic(input, HttpContentTypes.ApplicationJson);
             outputStatic = decoder.DecodeToStatic<PlaceResponse<PlaceDetail>>(input, HttpContentTypes.ApplicationJson);
-            
         }; 
         
-        It should_decode_correctly_to_dynamic_body = () =>
+        It shouldDecodeCorrectlyToDynamicBody = () =>
         {
             string formatted_address = outputDynamic.result.formatted_address;
             formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };
 
-        It should_drecode_correctly_to_static_body = () => outputStatic.result.formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");     
+        It shouldDrecodeCorrectlyToStaticBody = () => outputStatic.result.formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");     
         
         static DefaultDecoder decoder;
         static dynamic outputDynamic;
         static string input;
         static PlaceResponse<PlaceDetail> outputStatic;
-
     }
 
-    public class response_that_contains_umlats
+    public class ResponseThatContainsUmlats
     {
         Because of = () =>
         {
@@ -156,11 +163,9 @@ namespace EasyHttp.Specs.BugRepros
             http.Request.Accept = HttpContentTypes.ApplicationJson;
             
             response = http.Get("https://api.github.com/users/thecodejunkie");
-
-
         };
 
-        It should_correctly_decode_umlats = () =>
+        It shouldCorrectlyDecodeUmlats = () =>
         {
             var user = response.DynamicBody;
             string username = user.name;
@@ -169,13 +174,6 @@ namespace EasyHttp.Specs.BugRepros
 
         static HttpResponse response;
     }
-
-
-
-
-
-
-
 
     public class PlaceResponse<T>
     {

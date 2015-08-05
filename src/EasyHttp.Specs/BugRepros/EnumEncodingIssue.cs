@@ -12,43 +12,34 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.BugRepros
 {
     [Subject("Encoding Enums")]
-    public class when_encoding_an_object_that_contains_an_enum
+    public class WhenEncodingAnObjectThatContainsAnEnum
     {
+        static HttpClient client;
+        static DefaultEncoder encoder;
+        static byte[] result;
 
         Establish context = () =>
         {
             IEnumerable<IDataWriter> writers = new List<IDataWriter> { new JsonWriter(new DataWriterSettings(), "application/.*json") };
 
-            _encoder = new DefaultEncoder(new RegExBasedDataWriterProvider(writers));
+            encoder = new DefaultEncoder(new RegExBasedDataWriterProvider(writers));
         };
 
         Because of = () =>
         {
             var data = new Foo {Baz = Bar.First};
 
-            result = _encoder.Encode(data, "application/vnd.fubar+json");
+            result = encoder.Encode(data, "application/vnd.fubar+json");
         };
 
-        It should_encode_correctly = () =>
+        It shouldEncodeCorrectly = () =>
         {
             result.Length.ShouldBeGreaterThan(0);
-        };
-
-        static HttpClient client;
-        static DefaultEncoder _encoder;
-        static byte[] result;
+        };       
     }
  
     public class Foo
     {
         public Bar Baz { get; set; }
-    }
-
-    public enum Bar
-    {
-        First,
-        Second,
-        Third
-    }
- 
+    }     
 }

@@ -8,7 +8,7 @@ using Machine.Specifications;
 namespace EasyHttp.Specs.BugRepros
 {
 
-    public class file_upload_was_failing_because_fieldname_for_file_field_was_not_being_set
+    public class FileUploadWasFailingBecauseFieldnameForFileFieldWasNotBeingSet
     {
         Establish context = () =>
             {
@@ -36,7 +36,7 @@ namespace EasyHttp.Specs.BugRepros
             };
 
 
-        It should_say_that_operation_was_successful = () => response.RawText.ShouldNotContain("Please select a file to test.");
+        It shouldSayThatOperationWasSuccessful = () => response.RawText.ShouldNotContain("Please select a file to test.");
         
         static HttpClient httpClient;
         static HttpResponse response;
