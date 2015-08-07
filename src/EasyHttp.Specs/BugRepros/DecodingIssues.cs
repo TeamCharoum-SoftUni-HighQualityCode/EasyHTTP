@@ -140,7 +140,11 @@ namespace EasyHttp.Specs.BugRepros
             formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };
 
-        It shouldDrecodeCorrectlyToStaticBody = () => outputStatic.Result.FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");                 
+        It shouldDecodeCorrectlyToStaticBody = () =>
+        {
+            string FormattedAddress = outputStatic.Result.FormattedAddress;
+            FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
+        };                 
     }
 
     public class ResponseThatContainsUmlats

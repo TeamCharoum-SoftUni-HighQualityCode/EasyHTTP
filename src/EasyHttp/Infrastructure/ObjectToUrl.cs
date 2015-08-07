@@ -15,7 +15,7 @@ namespace EasyHttp.Infrastructure
 
         public string ParametersToUrl(object parameters)
         {
-            string uri = null;
+            var uri = "";
             var properties = GetProperties(parameters);
             if (parameters != null)
             {

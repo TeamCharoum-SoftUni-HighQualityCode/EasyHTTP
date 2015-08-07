@@ -234,7 +234,7 @@ namespace EasyHttp.Http
             }
 
             // TODO: Finish this.
-            //   public HttpMethod Allow { get; private set; }
+            //   public HttpMethod Allow { get; private set;     }
             //   public CacheControl CacheControl { get; private set; }
             //   public CacheControl Pragma { get; private set; }
             this.RawHeaders = this.response.Headers;
