@@ -29,7 +29,7 @@ namespace EasyHttp.Specs.Specs
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = "";
+            baseuri = null;
             uri = "uri";
         };
 
