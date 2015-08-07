@@ -7,7 +7,7 @@
 	using JsonFx.Serialization;
 	using JsonFx.Serialization.Providers;
 
-	public class RegExBasedDataReaderProvider: IDataReaderProvider
+	public class RegExBasedDataReaderProvider : IDataReaderProvider
 	{
 		private readonly IDictionary<string, IDataReader> readersByMime = 
 			new Dictionary<string, IDataReader>(StringComparer.OrdinalIgnoreCase);
@@ -20,7 +20,7 @@
 				{
 					foreach (string contentType in reader.ContentType)
 					{
-						if (String.IsNullOrEmpty(contentType) ||
+						if (string.IsNullOrEmpty(contentType) ||
 							this.readersByMime.ContainsKey(contentType))
 						{
 							continue;

@@ -65,12 +65,12 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("EasyHttp")]
 [assembly: AssemblyDescription("EasyHttp Http Client for .NET")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration(null)]
 [assembly: AssemblyCompany("Hadi Hariri")]
 [assembly: AssemblyProduct("EasyHttp")]
 [assembly: AssemblyCopyright("Copyright © 2010 - 2013 Hadi Hariri and Contributors")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTrademark(null)]
+[assembly: AssemblyCulture(null)]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

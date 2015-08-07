@@ -204,7 +204,7 @@ namespace EasyHttp.Http
             }
         }
 
-        private HttpResponse ProcessRequest(string filename = "")
+        private HttpResponse ProcessRequest(string filename = null)
         {
             var httpWebRequest = this.Request.PrepareRequest();
 
