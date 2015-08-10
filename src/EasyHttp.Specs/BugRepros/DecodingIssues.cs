@@ -45,7 +45,7 @@ namespace EasyHttp.Specs.BugRepros
 {
     public class WhenDecodingDateInIso8601Format
     {
-        public class User
+        private class User
         {
             public DateTime? LockedOutUntil { get; set; }
         }
@@ -136,14 +136,14 @@ namespace EasyHttp.Specs.BugRepros
         
         It shouldDecodeCorrectlyToDynamicBody = () =>
         {
-            string formatted_address = outputDynamic.result.formatted_address;
-            formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
+            string formattedAddress = outputDynamic.result.formatted_address;
+            formattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };
 
         It shouldDecodeCorrectlyToStaticBody = () =>
         {
-            string FormattedAddress = outputStatic.Result.FormattedAddress;
-            FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
+            string formattedAddress = outputStatic.Result.FormattedAddress;
+            formattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };                 
     }
 

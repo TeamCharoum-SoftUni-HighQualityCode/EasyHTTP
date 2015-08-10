@@ -20,7 +20,6 @@ namespace EasyHttp.Specs.BugRepros
 
         Because of = () =>
             {
-
                 var fileName = Path.Combine("Helpers", "test.xml");                 
                 IDictionary<string, object> data = new Dictionary<string, object>();
                 data.Add("runTest", " Run Test ");
