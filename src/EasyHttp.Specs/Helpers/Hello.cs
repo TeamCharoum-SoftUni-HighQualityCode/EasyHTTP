@@ -16,7 +16,7 @@ namespace EasyHttp.Specs.Helpers
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("Name can not be null or empty!");
+                    throw new ArgumentNullException(this.name, "Name can not be null or empty!");
                 }
                 this.name = value;
             }

@@ -2,6 +2,10 @@
 {
     using System;
 
+
+    /// <summary>
+    /// A class that holds the information about file name
+    /// </summary>
     public class Files
     {
         private string name;
@@ -16,7 +20,7 @@
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("Name can not be null or empty!");
+                    throw new ArgumentNullException(this.name, "Name can not be null or empty!");
                 }
                 this.name = value;
             }

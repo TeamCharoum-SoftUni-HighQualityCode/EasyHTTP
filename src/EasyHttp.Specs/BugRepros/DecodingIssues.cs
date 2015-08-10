@@ -104,7 +104,7 @@ namespace EasyHttp.Specs.BugRepros
         static DefaultDecoder decoder;
         static dynamic outputDynamic;
         static string input;
-        static PlaceResponse<DetailsInformation> outputStatic;
+        static Response<DetailsInformation> outputStatic;
 
         Establish context = () =>
         {
@@ -131,7 +131,7 @@ namespace EasyHttp.Specs.BugRepros
         Because of = () =>
         {
             outputDynamic = decoder.DecodeToDynamic(input, HttpContentTypes.ApplicationJson);
-            outputStatic = decoder.DecodeToStatic<PlaceResponse<DetailsInformation>>(input, HttpContentTypes.ApplicationJson);
+            outputStatic = decoder.DecodeToStatic<Response<DetailsInformation>>(input, HttpContentTypes.ApplicationJson);
         }; 
         
         It shouldDecodeCorrectlyToDynamicBody = () =>

@@ -57,10 +57,10 @@ namespace EasyHttp.Http
         {
             this.RawHeaders = new Dictionary<string, object>();
             this.ClientCertificates = new X509CertificateCollection();
-            this.UserAgent = String.Format("EasyHttp HttpClient v{0}",
+            this.UserAgent = string.Format("EasyHttp HttpClient v{0}",
                                       Assembly.GetAssembly(typeof(HttpClient)).GetName().Version);
 
-            this.Accept = String.Join(";", HttpContentTypes.TextHtml, HttpContentTypes.ApplicationXml,
+            this.Accept = string.Join(";", HttpContentTypes.TextHtml, HttpContentTypes.ApplicationXml,
                                  HttpContentTypes.ApplicationJson);
 
             this.encoder = encoder;

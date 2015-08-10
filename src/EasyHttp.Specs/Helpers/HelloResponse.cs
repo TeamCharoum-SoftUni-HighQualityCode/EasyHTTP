@@ -10,7 +10,7 @@
         {
             get
             {
-                return this.Result;
+                return this.result;
             }
             set
             {
