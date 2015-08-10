@@ -24,16 +24,16 @@ namespace EasyHttp.Specs.Specs
         static UriComposer uriComposer;
         static string url;
         static string uri;
-        static string baseuri;
+        static string baseUri;
 
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = null;
+            baseUri = null;
             uri = "uri";
         };
 
-        Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
+        Because of = () => url = uriComposer.Compose(baseUri, uri, null, false);
         It shouldReturnTheUri = () => url.ShouldEqual("uri");       
     }
 
@@ -42,16 +42,16 @@ namespace EasyHttp.Specs.Specs
         static UriComposer uriComposer;
         static string url;
         static string uri;
-        static string baseuri;
+        static string baseUri;
 
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = "baseuri";
+            baseUri = "baseuri";
             uri = "uri";
         };
 
-        Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
+        Because of = () => url = uriComposer.Compose(baseUri, uri, null, false);
         It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");   
     }
 
@@ -60,16 +60,16 @@ namespace EasyHttp.Specs.Specs
         static UriComposer uriComposer;
         static string url;
         static string uri;
-        static string baseuri;
+        static string baseUri;
 
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = "baseuri/";
+            baseUri = "baseuri/";
             uri = "uri";
         };
 
-        Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
+        Because of = () => url = uriComposer.Compose(baseUri, uri, null, false);
         It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");     
     }
 
@@ -78,16 +78,16 @@ namespace EasyHttp.Specs.Specs
         static UriComposer uriComposer;
         static string url;
         static string uri;
-        static string baseuri;
+        static string baseUri;
 
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = "baseuri/";
+            baseUri = "baseuri/";
             uri = "/uri";
         };
 
-        Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
+        Because of = () => url = uriComposer.Compose(baseUri, uri, null, false);
         It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");      
     }
 
@@ -96,16 +96,16 @@ namespace EasyHttp.Specs.Specs
         static UriComposer uriComposer;
         static string url;
         static string uri;
-        static string baseuri;
+        static string baseUri;
 
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = "baseuri";
+            baseUri = "baseuri";
             uri = "/uri";
         };
 
-        Because of = () => url = uriComposer.Compose(baseuri, uri, null, false);
+        Because of = () => url = uriComposer.Compose(baseUri, uri, null, false);
         It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri");   
     }
 
@@ -134,18 +134,18 @@ namespace EasyHttp.Specs.Specs
         static UriComposer uriComposer;
         static string url;
         static string uri;
-        static string baseuri;
+        static string baseUri;
         static object query;
 
         Establish context = () =>
         {
             uriComposer = new UriComposer();
-            baseuri = "baseuri";
+            baseUri = "baseuri";
             uri = "/uri";
             query = new { Name = "test" };
         };
 
-        Because of = () => url = uriComposer.Compose(baseuri, uri, query, true);
+        Because of = () => url = uriComposer.Compose(baseUri, uri, query, true);
         It shouldReturnTheBaseuriPlusUri = () => url.ShouldEqual("baseuri/uri/test");      
     }
 }

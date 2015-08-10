@@ -1,5 +1,5 @@
 namespace EasyHttp.Specs.BugRepros
-{
+{   
     public class AddressComponent
     {
         public string[] Types { get; set; }
