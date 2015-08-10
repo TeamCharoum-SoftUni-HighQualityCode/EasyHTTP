@@ -3,6 +3,9 @@ using EasyHttp.Http;
 
 namespace EasyHttp.Infrastructure
 {
+    /// <summary>
+    /// A class to hold information on all files and related data
+    /// </summary>
     public class FileData
     {
         private string fieldName;

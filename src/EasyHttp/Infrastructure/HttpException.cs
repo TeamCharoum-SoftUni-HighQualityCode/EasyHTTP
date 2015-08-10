@@ -62,7 +62,10 @@ using System.Runtime.Serialization;
 
 namespace EasyHttp.Infrastructure
 {
-	 [Serializable]
+    /// <summary>
+    /// An exception class (inheriting the base class System.Exception) to handle all http-specific exceptions
+    /// </summary>
+    [Serializable]
     public class HttpException : Exception
     {
         public HttpStatusCode StatusCode { get; private set; }

@@ -60,6 +60,9 @@ namespace EasyHttp.Infrastructure
     using System;
     using System.Runtime.Serialization;
 
+    /// <summary>
+    /// An exception class (inheriting the base class System.Exception) to handle all exceptions related to "Property not found"
+    /// </summary>
     [Serializable]
     public class PropertyNotFoundException : Exception
     {
