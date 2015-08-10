@@ -70,8 +70,41 @@ namespace EasyHttp.Infrastructure
 
         protected class PropertyValue
         {
-            public string Name { get; set; }
-            public string Value { get; set; }
+            private string name;
+            private string value;
+
+            public string Name {
+                get
+                {
+                    return this.name;
+                }
+                set
+                {
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        throw new ArgumentNullException(nameof(value));
+                    }
+
+                    this.name = value;
+                }
+            }
+
+            public string Value
+            {
+                get
+                {
+                    return this.value;
+                }
+                set
+                {
+                    if (string.IsNullOrEmpty(value))
+                    {
+                        throw new ArgumentNullException(value);
+                    }
+
+                    this.value = value;
+                }
+            }
         }
     }
 }

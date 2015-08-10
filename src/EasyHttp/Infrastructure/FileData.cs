@@ -1,13 +1,82 @@
-﻿using EasyHttp.Http;
+﻿using System;
+using EasyHttp.Http;
 
 namespace EasyHttp.Infrastructure
 {
     public class FileData
     {
-        public string FieldName { get; set; }
-        public string Filename { get; set; }
-        public string ContentType { get; set; }
-        public string ContentTransferEncoding { get; set; }
+        private string fieldName;
+        private string fileName;
+        private string contentType;
+        private string contentTransferEncoding;
+
+        public string FieldName
+        {
+            get
+            {
+                return this.fieldName;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.fieldName = value;
+            }
+        }
+
+        public string FileName
+        {
+            get
+            {
+                return this.fileName;
+                
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.fileName = value;
+            }
+        }
+
+        public string ContentType
+        {
+            get
+            {
+                return this.contentType;
+            }
+            set {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.contentType = value;
+            }
+        }
+
+        public string ContentTransferEncoding
+        {
+            get
+            {
+                return this.contentTransferEncoding;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.contentTransferEncoding = value;
+            }
+        }
 
         public FileData()
         {

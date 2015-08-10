@@ -58,8 +58,8 @@ namespace EasyHttp.Specs.Specs
        
             IList<FileData> files = new List<FileData>();
 
-            files.Add(new FileData() { FieldName = "image1", ContentType = "image/jpeg", Filename = imageFile});
-            files.Add(new FileData() { FieldName = "image2", ContentType = "image/jpeg", Filename = imageFile });
+            files.Add(new FileData() { FieldName = "image1", ContentType = "image/jpeg", FileName = imageFile});
+            files.Add(new FileData() { FieldName = "image2", ContentType = "image/jpeg", FileName = imageFile });
             httpClient.Post(string.Format("{0}/fileupload", "http://localhost:16000"), data, files);            
         };
 

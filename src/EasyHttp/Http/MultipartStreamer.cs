@@ -43,7 +43,7 @@
             {
                 foreach (var fileData in this.multipartFileData)
                 {
-                    using (var file = new FileStream(fileData.Filename, FileMode.Open))
+                    using (var file = new FileStream(fileData.FileName, FileMode.Open))
                     {
                         stream.WriteString(CreateFileBoundaryHeader(fileData));
 
@@ -82,7 +82,7 @@
                 foreach (var fileData in this.multipartFileData)
                 {
                     contentLength += ascii.GetBytes(CreateFileBoundaryHeader(fileData)).Length;
-                    contentLength += new FileInfo(fileData.Filename).Length;
+                    contentLength += new FileInfo(fileData.FileName).Length;
                     contentLength += ascii.GetBytes(this.boundary).Length;
                 }
             }
@@ -120,7 +120,7 @@
                 "Content-Type: {2}\r\n" +
                 "Content-Transfer-Encoding: {3}\r\n\r\n",
                 fileData.FieldName,
-                Path.GetFileName(fileData.Filename),
+                Path.GetFileName(fileData.FileName),
                 fileData.ContentType,
                 fileData.ContentTransferEncoding);
         }

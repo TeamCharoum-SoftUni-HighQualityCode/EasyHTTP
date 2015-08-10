@@ -21,12 +21,12 @@ namespace EasyHttp.Specs.BugRepros
         Because of = () =>
             {
 
-                var filename = Path.Combine("Helpers", "test.xml");                 
+                var fileName = Path.Combine("Helpers", "test.xml");                 
                 IDictionary<string, object> data = new Dictionary<string, object>();
                 data.Add("runTest", " Run Test ");
                 IList<FileData> files = new List<FileData>();
 
-                files.Add(new FileData() { FieldName = "file", ContentType = "text/xml", Filename = filename });
+                files.Add(new FileData() { FieldName = "file", ContentType = "text/xml", FileName = fileName });
                 httpClient.Post("https://loandelivery.intgfanniemae.com/mismoxtt/mismoValidator.do", data, files);
                 response = httpClient.Response;
             };

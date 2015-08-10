@@ -1,4 +1,5 @@
-﻿using ServiceStack.WebHost.Endpoints;
+﻿using System;
+using ServiceStack.WebHost.Endpoints;
 
 namespace EasyHttp.Specs.Helpers
 {
@@ -25,28 +26,130 @@ namespace EasyHttp.Specs.Helpers
 
     public class Hello
     {
-        public string Name { get; set; }
+        private string name;
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.name = value;
+            }
+        }
     }
 
     public class HelloResponse
     {
-        public string Result { get; set; }
+        private string result;
+
+        public string Result
+        {
+            get
+            {
+                return this.Result;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.result = value;
+            }
+        }
     }
 
     public class Redirect
     {
-        public string Name { get; set; }
+        private string name;
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.name = value;
+            }
+        }
     }
 
     public class Files
     {
-        public string Name { get; set; }
+        private string name;
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.name = value;
+            }
+        }
     }
 
     public class CookieInfo
     {
-        public string Name { get; set; }
-        public string Value { get; set; }
+        private string name;
+        private string value;
+
+        public string Name
+        {
+            get
+            {
+                return this.name;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.name = value;
+            }
+        }
+
+        public string Value
+        {
+            get
+            {
+                return this.value;
+            }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(nameof(value));
+                }
+
+                this.value = value;
+            }
+        }
     }
 
     
