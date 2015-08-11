@@ -50,9 +50,9 @@ namespace EasyHttp.Specs.BugRepros
             public DateTime? LockedOutUntil { get; set; }
         }
 
-        static DefaultDecoder decoder;
-        static User outputStatic;
-        static string input;
+        private static DefaultDecoder decoder;
+        private static User outputStatic;
+        private static string input;
 
         Establish context = () =>
         {
@@ -76,9 +76,9 @@ namespace EasyHttp.Specs.BugRepros
 
     public class WhenDecodingAnObjectThatIsAnArrayToDynamic
     {
-        static string input;
-        static DefaultDecoder decoder;
-        static dynamic output;
+        private static string input;
+        private static DefaultDecoder decoder;
+        private static dynamic output;
 
         Establish context = () => 
         {
@@ -101,10 +101,10 @@ namespace EasyHttp.Specs.BugRepros
 
     public class WhenDecodingFieldsWithUnderscores
     {
-        static DefaultDecoder decoder;
-        static dynamic outputDynamic;
-        static string input;
-        static Response<DetailsInformation> outputStatic;
+        private static DefaultDecoder decoder;
+        private static dynamic outputDynamic;
+        private static string input;
+        private static Response<DetailsInformation> outputStatic;
 
         Establish context = () =>
         {
@@ -149,7 +149,7 @@ namespace EasyHttp.Specs.BugRepros
 
     public class ResponseThatContainsUmlats
     {
-        static HttpResponse response;
+        private static HttpResponse response;
 
         Because of = () =>
         {
@@ -164,10 +164,5 @@ namespace EasyHttp.Specs.BugRepros
             string username = user.name;
             username.ShouldEqual("Andreas Håkansson");
         };        
-    }
-
-    public class PlaceGeometry
-    {
-        public Location Location { get; set; }
     }
 }

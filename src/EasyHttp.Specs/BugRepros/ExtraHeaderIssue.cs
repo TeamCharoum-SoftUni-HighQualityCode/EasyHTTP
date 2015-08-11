@@ -5,6 +5,8 @@ namespace EasyHttp.Specs.BugRepros
 {
     public class ExtraHeader
     {
+        private static HttpClient http;
+
         Establish context = () =>
             {
                 http = new HttpClient();
@@ -15,6 +17,5 @@ namespace EasyHttp.Specs.BugRepros
             };
 
         It shouldAddItToTheRequest = () => { http.Request.RawHeaders.ContainsKey("X-Header"); };
-        static HttpClient http;
     }
 }

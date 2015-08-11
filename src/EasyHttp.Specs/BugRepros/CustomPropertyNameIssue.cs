@@ -15,8 +15,8 @@ namespace EasyHttp.Specs.BugRepros
     [Subject("Custom Decoding")]
     public class WhenDecodingAnObjectWithCustomNamingOfProperty
     {
-        static IDecoder decoder;
-        static CustomNaming obj;
+        private static IDecoder decoder;
+        private static CustomNaming obj;
 
         static CombinedResolverStrategy CombinedResolverStrategy()
         {
@@ -49,8 +49,8 @@ namespace EasyHttp.Specs.BugRepros
     [Subject("Custom Encoding")]
     public class WhenEncodingAnObjectWithCustomNamingOfProperty
     {
-        static IEncoder encoder;
-        static byte[] encoded;
+        private static IEncoder encoder;
+        private static byte[] encoded;
 
         static CombinedResolverStrategy CombinedResolverStrategy()
         {

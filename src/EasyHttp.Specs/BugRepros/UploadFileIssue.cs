@@ -10,8 +10,8 @@ namespace EasyHttp.Specs.BugRepros
 
     public class FileUploadWasFailingBecauseFieldnameForFileFieldWasNotBeingSet
     {
-        static HttpClient httpClient;
-        static HttpResponse response;
+        private static HttpClient httpClient;
+        private static HttpResponse response;
 
         Establish context = () =>
             {

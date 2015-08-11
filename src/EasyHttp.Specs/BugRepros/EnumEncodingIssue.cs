@@ -11,9 +11,9 @@ namespace EasyHttp.Specs.BugRepros
     [Subject("Encoding Enums")]
     public class WhenEncodingAnObjectThatContainsAnEnum
     {
-        static HttpClient client;
-        static DefaultEncoder encoder;
-        static byte[] result;
+        private static HttpClient client;
+        private static DefaultEncoder encoder;
+        private static byte[] result;
 
         Establish context = () =>
         {

@@ -1,6 +1,5 @@
 namespace EasyHttp.Specs.BugRepros
 {
-
     /// <summary>
     /// A class that holds the necessary information about the address
     /// </summary>
