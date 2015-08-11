@@ -147,12 +147,12 @@ namespace EasyHttp.Http
         }
 
         /// <summary>
-        /// Maps the response from the server
+        /// Gets the response from server and maps it
         /// </summary>
         /// <param name="request">Current request</param>
         /// <param name="filename">Name of the file(if exist)</param>
         /// <param name="streamResponse">If the response is stream</param>
-        public void SetResponse(WebRequest request, string filename, bool streamResponse)
+        public void GetResponse(WebRequest request, string filename, bool streamResponse)
         {
             try
             {
@@ -175,30 +175,32 @@ namespace EasyHttp.Http
                 return;
             }
 
-            using (var stream = this.ResponseStream)
+            using (var stream = this.response.GetResponseStream())
             {
-                if (stream != null)
+                if (stream == null)
                 {
-                    if (!string.IsNullOrEmpty(filename))
-                    {
-                        using (var filestream = new FileStream(filename, FileMode.CreateNew))
-                        {
-                            int count;
-                            var buffer = new byte[8192];
+                    return;
+                }
 
-                            while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                filestream.Write(buffer, 0, count);
-                            }
+                if (!string.IsNullOrEmpty(filename))
+                {
+                    using (var filestream = new FileStream(filename, FileMode.CreateNew))
+                    {
+                        int count;
+                        var buffer = new byte[8192];
+
+                        while ((count = stream.Read(buffer, 0, buffer.Length)) > 0)
+                        {
+                            filestream.Write(buffer, 0, count);
                         }
                     }
-                    else
+                }
+                else
+                {
+                    var encoding = string.IsNullOrEmpty(this.CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(this.CharacterSet);
+                    using (var reader = new StreamReader(stream, encoding))
                     {
-                        var encoding = string.IsNullOrEmpty(this.CharacterSet) ? Encoding.UTF8 : Encoding.GetEncoding(this.CharacterSet);
-                        using (var reader = new StreamReader(stream, encoding))
-                        {
-                            this.RawText = reader.ReadToEnd();
-                        }
+                        this.RawText = reader.ReadToEnd();
                     }
                 }
             }
@@ -241,7 +243,7 @@ namespace EasyHttp.Http
             //public HttpMethod Allow { get; private set;     }
             //public CacheControl CacheControl { get; private set; }
             //public CacheControl Pragma { get; private set; }
-
+             
             this.RawHeaders = this.response.Headers;
         }
 

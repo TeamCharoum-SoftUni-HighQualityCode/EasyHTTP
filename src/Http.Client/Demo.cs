@@ -1,11 +1,13 @@
 ﻿namespace Http.Client
 {
     using System;
-    using System.Net;
+    using System.Reflection;
 
     using EasyHttp.Http;
+    using EasyHttp.Infrastructure;
 
     using HttpClient = System.Net.Http.HttpClient;
+    using System.Linq.Expressions;
 
     //using EasyHttp.Configuration;
     // using EasyHttp.Http;
@@ -16,7 +18,7 @@
         {
             //using (var httpClient = new HttpClient())
             //{
-               
+
             //    httpClient.BaseAddress = new Uri(@"https://educloud.superhosting.bg:2083/cpsess3839927900/frontend/x3/filemanager/showfile.html?file=jsonTest.json&fileop=&dir=%2Fhome%2Ftemeliev%2Fpublic_ftp%2Fincoming&dirop=&charset=&file_charset=utf-8&baseurl=&basedir=");
             //    httpClient.DefaultRequestHeaders.Add("Accept", "text/html");
             //    httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -29,7 +31,7 @@
             //    Console.ReadKey();
             //    var teset = " ; ;; ";
             //}
-             
+
 
             EasyHttp.Http.HttpClient client = new EasyHttp.Http.HttpClient();
             client.Request.Accept = HttpContentTypes.TextPlain;

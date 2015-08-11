@@ -1,8 +1,10 @@
-﻿using System;
-using EasyHttp.Http;
-
+﻿
 namespace EasyHttp.Infrastructure
 {
+    using System;
+    using Http;
+    using Utilities;
+
     /// <summary>
     /// A class to hold information on all files and related data
     /// </summary>
@@ -23,7 +25,7 @@ namespace EasyHttp.Infrastructure
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.FieldName).Name);
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.FieldName));
                 }
 
                 this.fieldName = value;
@@ -41,7 +43,7 @@ namespace EasyHttp.Infrastructure
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.FileName).Name);
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.FileName));
                 }
 
                 this.fileName = value;
@@ -58,7 +60,7 @@ namespace EasyHttp.Infrastructure
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.ContentType).Name);
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.ContentType));
                 }
 
                 this.contentType = value;
@@ -76,7 +78,7 @@ namespace EasyHttp.Infrastructure
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.ContentTransferEncoding).Name);
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.ContentTransferEncoding));
                 }
 
                 this.contentTransferEncoding = value;

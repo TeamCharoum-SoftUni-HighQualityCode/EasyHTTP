@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyHttp.Utilities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
@@ -100,7 +101,7 @@ namespace EasyHttp.Infrastructure
                 {
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new ArgumentNullException(typeof(ObjectsWithNameAndValue).GetProperty(this.Name).Name);
+                        throw new ArgumentNullException(ReflectionUtility.PropertyName<ObjectsWithNameAndValue>(x => x.Name));
                     }
 
                     this.name = value;
@@ -117,7 +118,7 @@ namespace EasyHttp.Infrastructure
                 {
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new ArgumentNullException(value);
+                        throw new ArgumentNullException(ReflectionUtility.PropertyName<ObjectsWithNameAndValue>(x => x.Value));
                     }
 
                     this.value = value;

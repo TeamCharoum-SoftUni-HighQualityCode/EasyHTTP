@@ -143,6 +143,11 @@ namespace EasyHttp.Http
 
         public string Password { get; private set; }
 
+        /// <summary>
+        /// Sets authentication info
+        /// </summary>
+        /// <param name="username">Name of user</param>
+        /// <param name="password">Password</param>
         public void SetBasicAuthentication(string username, string password)
         {
             this.Username = username;
