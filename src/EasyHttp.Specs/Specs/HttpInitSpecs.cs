@@ -7,7 +7,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient Init")]
     public class WhenCreatingANewInstance
     {
-        static HttpClient httpClient;
+        private static HttpClient httpClient;
+
         Because of = () => { httpClient = new HttpClient(); };
         It shouldReturnNewInstanceUsingDefaultConfiguration = () => httpClient.ShouldNotBeNull();
     }
@@ -15,7 +16,7 @@ namespace EasyHttp.Specs.Specs
     [Subject("Initializing with base url")]
     public class WhenCreatingANewInstanceWithBaseUrl
     {
-        static HttpClient httpClient;
+        private static HttpClient httpClient;
 
         Because of = () =>
         {

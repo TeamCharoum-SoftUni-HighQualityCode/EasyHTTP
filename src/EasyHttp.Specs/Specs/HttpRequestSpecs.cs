@@ -68,8 +68,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAnyTypeOfRequestToInvalidHost
     {
-        static HttpClient httpClient;
-        static Exception exception;
+        private static HttpClient httpClient;
+        private static Exception exception;
 
         Establish context = () =>
         {
@@ -88,18 +88,17 @@ namespace EasyHttp.Specs.Specs
     public class WhenMakingADeleteRequestWithAValidUri 
     {
         // TODO: Implement me
-        static HttpClient httpClient;
-        static dynamic response;
-        static string rev;
-        static Guid guid;
+        private static HttpClient httpClient;
+        private static dynamic response;
+        private static string rev;
+        private static Guid guid;
     }
 
     [Subject("HttpClient")]
     public class WhenMakingAGetRequestWithValidUri
     {
-
-        static HttpClient httpClient;
-        static HttpResponse httpResponse;
+        private static HttpClient httpClient;
+        private static HttpResponse httpResponse;
 
         Establish context = () =>
         {
@@ -117,7 +116,7 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAGetRequestWithValidUriAndAndValidParameters
     {
-        static HttpClient httpClient;
+        private static HttpClient httpClient;
         private static dynamic response;
 
         Establish context = () =>
@@ -142,8 +141,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAGetRequestWithValidUriAndAndValidParametersUsingSegments
     {
-        static HttpClient httpClient;
-        static dynamic response;
+        private static HttpClient httpClient;
+        private static dynamic response;
 
         Establish context = () =>
         {
@@ -168,9 +167,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAGetRequestWithValidUriAndContentTypeSetToApplicationJson
     {
-
-        static HttpClient httpClient;
-        static HttpResponse response;
+        private static HttpClient httpClient;
+        private static HttpResponse response;
 
         Establish context = () =>
         {
@@ -200,8 +198,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAHeadRequestWithValidUri
     {
-        static HttpClient httpClient;
-        static HttpResponse response;
+        private static HttpClient httpClient;
+        private static HttpResponse response;
 
         Establish context = () =>
         {
@@ -220,8 +218,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAPostRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJson
     {
-        static HttpClient httpClient;
-        static dynamic response;
+        private static HttpClient httpClient;
+        private static dynamic response;
 
         Establish context = () =>
         {
@@ -244,8 +242,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAPostRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJsonAndParametersAsSegments
     {
-        static HttpClient httpClient;
-        static dynamic response;
+        private static HttpClient httpClient;
+        private static dynamic response;
 
         Establish context = () =>
         {
@@ -269,8 +267,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingAPutRequestWithValidUriAndValidDataAndContentTypeSetToApplicationJson
     {
-        static HttpClient httpClient;
-        static dynamic response;
+        private static HttpClient httpClient;
+        private static dynamic response;
 
         Establish context = () =>
         {
@@ -294,8 +292,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingRequestsAndPersistingCookies
     {
-        static HttpClient httpClient;
-        static dynamic response;
+        private static HttpClient httpClient;
+        private static dynamic response;
 
         Establish context = () =>
         {
@@ -320,8 +318,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("HttpClient")]
     public class WhenMakingRequestsAndNotPersistingCookies
     {
-        static HttpClient httpClient;
-        static dynamic response;
+        private static HttpClient httpClient;
+        private static dynamic response;
 
         Establish context = () =>
         {

@@ -5,9 +5,9 @@ namespace EasyHttp.Specs.Specs
 {
     public class WhenBaseuriIsNullAndQueryIsNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
 
         Establish context = () =>
         {
@@ -21,10 +21,10 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriIsEmptyAndQueryIsNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseUri;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseUri;
 
         Establish context = () =>
         {
@@ -39,10 +39,10 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriIsFilledAndDoesNotEndWithAForwardslashAndQueryIsNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseUri;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseUri;
 
         Establish context = () =>
         {
@@ -57,10 +57,10 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriIsFilledAndEndsWithAForwardslashAndQueryIsNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseUri;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseUri;
 
         Establish context = () =>
         {
@@ -75,10 +75,10 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriIsFilledAndEndsWithAForwardslashAndUriStarartswithAForwardslashAndQueryIsNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseUri;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseUri;
 
         Establish context = () =>
         {
@@ -93,10 +93,10 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriIsFilledAndDoesNotEndWithAForwardslashAndUriStarartswithAForwardslashAndQueryIsNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseUri;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseUri;
 
         Establish context = () =>
         {
@@ -111,11 +111,11 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriAndUrlAreFilledAndQueryIsNotNull
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseuri;
-        static object query;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseuri;
+        private static object query;
 
         Establish context = () =>
         {
@@ -131,11 +131,11 @@ namespace EasyHttp.Specs.Specs
 
     public class WhenBaseuriAndUrlAreFilledAndQueryIsNotNullAndParametersAsSegmentsIsTrue
     {
-        static UriComposer uriComposer;
-        static string url;
-        static string uri;
-        static string baseUri;
-        static object query;
+        private static UriComposer uriComposer;
+        private static string url;
+        private static string uri;
+        private static string baseUri;
+        private static object query;
 
         Establish context = () =>
         {

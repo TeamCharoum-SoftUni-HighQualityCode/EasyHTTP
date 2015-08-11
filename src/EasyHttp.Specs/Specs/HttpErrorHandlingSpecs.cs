@@ -8,8 +8,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof (HttpClient))]
     public class WhenMakingARequestThatContainsAResponseWithErrorInformation  
     {
-        static HttpClient client;
-        static HttpResponse response;
+        private static HttpClient client;
+        private static HttpResponse response;
 
         Establish context = () =>
         {

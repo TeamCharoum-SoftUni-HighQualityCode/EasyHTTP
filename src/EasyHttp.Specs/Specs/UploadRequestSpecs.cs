@@ -13,11 +13,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof (HttpClient))]
     public class WhenSendingBinaryDataAsPut
     {
-        static HttpClient httpClient;
-        static Guid guid;
-        static HttpResponse response;
-        static string rev;
-
+        private static HttpClient httpClient;
+           
         Establish context = () =>
         {
             httpClient = new HttpClient();
@@ -38,10 +35,7 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof (HttpClient))]
     public class WhenSendingBinaryDataAsMultipartPost
     {
-        static HttpClient httpClient;
-        static Guid guid;
-        static HttpResponse response;
-        static string rev;
+        private static HttpClient httpClient;
 
         Establish context = () =>
         {

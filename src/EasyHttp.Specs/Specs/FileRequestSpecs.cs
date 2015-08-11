@@ -8,8 +8,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingAGetProvidedFilename
     {
-        static HttpClient httpClient;
-        static string filename;
+        private static HttpClient httpClient;
+        private static string filename;
 
         Establish context = () =>
         {
