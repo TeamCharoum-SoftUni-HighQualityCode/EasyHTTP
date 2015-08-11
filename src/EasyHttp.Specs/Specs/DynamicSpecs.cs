@@ -66,8 +66,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("DynamicType")]
     public class WhenAccessingAPropertyThatIsDefined
     {
-        static dynamic dynamicObject;
-        static string value;
+        private static dynamic dynamicObject;
+        private static string value;
 
         Establish context = () =>
         {
@@ -86,8 +86,8 @@ namespace EasyHttp.Specs.Specs
     [Subject("DynamicType")]
     public class WhenAccessingAPropertyThatIsNotDefined
     {
-        static dynamic dynamicObject;
-        static Exception exception;
+        private static dynamic dynamicObject;
+        private static Exception exception;
 
         Establish context = () =>
         {
@@ -108,9 +108,9 @@ namespace EasyHttp.Specs.Specs
     [Subject("DynamicType")]
     public class WhenAccessingAPropertyOfAChildPropertyThatIsDefined
     {
-        static dynamic childObject;
-        static dynamic parentObject;
-        static string value;
+        private static dynamic childObject;
+        private static dynamic parentObject;
+        private static string value;
 
         Establish context = () =>
         {
@@ -131,10 +131,10 @@ namespace EasyHttp.Specs.Specs
     [Subject("Infrastructure")]
     public class WhenAccessingAPropertyOfAChildPropertyThatIsNotDefined
     {
-        static dynamic childObject;
-        static dynamic parentObject;
-        static string value;
-        static Exception exception;
+        private static dynamic childObject;
+        private static dynamic parentObject;
+        private static string value;
+        private static Exception exception;
 
         Establish context = () =>
         {

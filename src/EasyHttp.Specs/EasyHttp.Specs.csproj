@@ -114,6 +114,9 @@
     <Compile Include="Specs\DynamicObjectToUrlSegmentsSpecs.cs" />
     <Compile Include="Specs\DynamicObjectToUrlSpecs.cs" />
     <Compile Include="Specs\HttpErrorHandlingSpecs.cs" />
+    <Compile Include="Specs\StaticObject.cs" />
+    <Compile Include="Specs\StaticObjectWithName.cs" />
+    <Compile Include="Specs\StaticObjectWithNameAndId.cs" />
     <Compile Include="Specs\StreamRequestSpecs.cs" />
     <Compile Include="Specs\UploadRequestSpecs.cs" />
     <Compile Include="Specs\DynamicSpecs.cs" />

@@ -8,9 +8,9 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersWithOneParameterUsingExpandoObject
     {
-        static ObjectToUrlParameters objectToUrlParameters;
+        private static ObjectToUrlParameters objectToUrlParameters;
         private static dynamic parameters;
-        static string url;
+        private static string url;
 
         Establish context = () =>
         {
@@ -26,7 +26,7 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersWithTwoParametersUsingExpandoObject
     {
-        static ObjectToUrlParameters objectToUrlParameters;
+        private static ObjectToUrlParameters objectToUrlParameters;
         private static dynamic parameters;
         private static string url;
 
@@ -46,8 +46,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersWithOneParameterUsingAnonymousObject
     {
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        private static ObjectToUrlParameters objectToUrlParameters;
+        private static string url;
 
         Establish context = () =>
         {
@@ -62,8 +62,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersWithTwoParametersUsingAnonymousObject
     {
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        private static ObjectToUrlParameters objectToUrlParameters;
+        private static string url;
 
         Establish context = () =>
         {
@@ -77,8 +77,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersItShouldEncodeValue
     {
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        private static ObjectToUrlParameters objectToUrlParameters;
+        private static string url;
 
         Establish context = () =>
         {
@@ -92,8 +92,8 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersItShouldBeEmptyWhenPassingNull
     {
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
+        private static ObjectToUrlParameters objectToUrlParameters;
+        private static string url;
 
         Establish context = () =>
         {
@@ -107,9 +107,9 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersWithOneParameterUsingStaticObject
     {
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
-        static StaticObjectWithName parameter;
+        private static ObjectToUrlParameters objectToUrlParameters;
+        private static string url;
+        private static StaticObjectWithName parameter;
 
         Establish context = () =>
         {
@@ -124,9 +124,9 @@ namespace EasyHttp.Specs.Specs
     [Subject(typeof(HttpClient))]
     public class WhenMakingUrlParametersWithTwoParametersUsingStaticObject
     {
-        static ObjectToUrlParameters objectToUrlParameters;
-        static string url;
-        static StaticObjectWithNameAndId parameter;
+        private static ObjectToUrlParameters objectToUrlParameters;
+        private static string url;
+        private static StaticObjectWithNameAndId parameter;
         
         Establish context = () =>
         {
@@ -136,16 +136,5 @@ namespace EasyHttp.Specs.Specs
 
         Because of = () => url = objectToUrlParameters.ParametersToUrl(parameter);
         It shouldHaveTheCorrectUrlParameters = () => url.ShouldEqual("?Name=test&Id=1");
-    }
-
-    public class StaticObjectWithName
-    {
-        public string Name { get; set; }
-    }
-
-    public class StaticObjectWithNameAndId
-    {
-        public string Name { get; set; }
-        public int Id { get; set; }
     }
 }
