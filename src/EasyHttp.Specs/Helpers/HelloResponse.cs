@@ -16,7 +16,7 @@
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException("Name can not be null or empty!");
+                    throw new ArgumentNullException(this.result,"Result can not be null or empty!");
                 }
                 this.result = value;
             }
