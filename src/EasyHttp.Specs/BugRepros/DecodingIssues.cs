@@ -142,8 +142,8 @@ namespace EasyHttp.Specs.BugRepros
 
         It shouldDecodeCorrectlyToStaticBody = () =>
         {
-            string FormattedAddress = outputStatic.Result.FormattedAddress;
-            FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
+            string FormattedAddress =
+                outputStatic.Result.FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };                 
     }
 
