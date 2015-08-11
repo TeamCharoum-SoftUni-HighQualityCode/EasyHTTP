@@ -45,7 +45,7 @@ namespace EasyHttp.Specs.BugRepros
 {
     public class WhenDecodingDateInIso8601Format
     {
-        public class User
+        private class User
         {
             public DateTime? LockedOutUntil { get; set; }
         }
@@ -104,7 +104,7 @@ namespace EasyHttp.Specs.BugRepros
         static DefaultDecoder decoder;
         static dynamic outputDynamic;
         static string input;
-        static PlaceResponse<DetailsInformation> outputStatic;
+        static Response<DetailsInformation> outputStatic;
 
         Establish context = () =>
         {
@@ -131,19 +131,19 @@ namespace EasyHttp.Specs.BugRepros
         Because of = () =>
         {
             outputDynamic = decoder.DecodeToDynamic(input, HttpContentTypes.ApplicationJson);
-            outputStatic = decoder.DecodeToStatic<PlaceResponse<DetailsInformation>>(input, HttpContentTypes.ApplicationJson);
+            outputStatic = decoder.DecodeToStatic<Response<DetailsInformation>>(input, HttpContentTypes.ApplicationJson);
         }; 
         
         It shouldDecodeCorrectlyToDynamicBody = () =>
         {
-            string formatted_address = outputDynamic.result.formatted_address;
-            formatted_address.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
+            string formattedAddress = outputDynamic.result.formatted_address;
+            formattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };
 
         It shouldDecodeCorrectlyToStaticBody = () =>
         {
-            string FormattedAddress =
-                outputStatic.Result.FormattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
+            string formattedAddress = outputStatic.Result.FormattedAddress;
+            formattedAddress.ShouldEqual("Church Street, Wilmslow, SK9 1, United Kingdom");
         };                 
     }
 

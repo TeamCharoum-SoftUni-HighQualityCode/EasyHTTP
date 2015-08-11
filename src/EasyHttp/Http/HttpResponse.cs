@@ -146,6 +146,12 @@ namespace EasyHttp.Http
             return this.decoder.DecodeToStatic<T>(this.RawText, this.ContentType);
         }
 
+        /// <summary>
+        /// Gets the response from server and maps it
+        /// </summary>
+        /// <param name="request">Current request</param>
+        /// <param name="filename">Name of the file(if exist)</param>
+        /// <param name="streamResponse">If the response is stream</param>
         public void GetResponse(WebRequest request, string filename, bool streamResponse)
         {
             try
@@ -162,7 +168,7 @@ namespace EasyHttp.Http
                 this.response = (HttpWebResponse)webException.Response;
             }
 
-            this.GetHeaders();
+            this.MapHeaders();
 
             if (streamResponse)
             {
@@ -200,7 +206,7 @@ namespace EasyHttp.Http
             }
         }
 
-        private void GetHeaders()
+        private void MapHeaders()
         {
             this.CharacterSet = this.response.CharacterSet;
             this.ContentType = this.response.ContentType;
@@ -234,9 +240,10 @@ namespace EasyHttp.Http
             }
 
             // TODO: Finish this.
-            //   public HttpMethod Allow { get; private set;     }
-            //   public CacheControl CacheControl { get; private set; }
-            //   public CacheControl Pragma { get; private set; }
+            //public HttpMethod Allow { get; private set;     }
+            //public CacheControl CacheControl { get; private set; }
+            //public CacheControl Pragma { get; private set; }
+             
             this.RawHeaders = this.response.Headers;
         }
 

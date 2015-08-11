@@ -6,9 +6,6 @@ using JsonFx.Json;
 using JsonFx.Serialization;
 using Machine.Specifications;
 
-
-
-
 namespace EasyHttp.Specs.BugRepros
 {
     [Subject("Encoding Enums")]

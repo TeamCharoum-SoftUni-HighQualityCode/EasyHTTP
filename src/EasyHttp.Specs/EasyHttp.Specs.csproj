@@ -98,10 +98,15 @@
     <Compile Include="BugRepros\Location.cs" />
     <Compile Include="BugRepros\Response.cs" />
     <Compile Include="BugRepros\UploadFileIssue.cs" />
+    <Compile Include="Helpers\CookieInfo.cs" />
     <Compile Include="Helpers\CookieService.cs" />
     <Compile Include="Helpers\DataSpecificationBase.cs" />
+    <Compile Include="Helpers\Files.cs" />
     <Compile Include="Helpers\FilesService.cs" />
+    <Compile Include="Helpers\Hello.cs" />
+    <Compile Include="Helpers\HelloResponse.cs" />
     <Compile Include="Helpers\HelloService.cs" />
+    <Compile Include="Helpers\Redirect.cs" />
     <Compile Include="Helpers\RedirectorService.cs" />
     <Compile Include="Helpers\ServiceStackHost.cs" />
     <Compile Include="Specs\AutoFollowRedirectSpecs.cs" />

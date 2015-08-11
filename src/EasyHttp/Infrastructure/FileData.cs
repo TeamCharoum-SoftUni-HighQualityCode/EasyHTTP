@@ -1,8 +1,10 @@
-﻿using System;
-using EasyHttp.Http;
-
+﻿
 namespace EasyHttp.Infrastructure
 {
+    using System;
+    using Http;
+    using Utilities;
+
     /// <summary>
     /// A class to hold information on all files and related data
     /// </summary>
@@ -23,7 +25,7 @@ namespace EasyHttp.Infrastructure
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.FieldName));
                 }
 
                 this.fieldName = value;
@@ -35,13 +37,13 @@ namespace EasyHttp.Infrastructure
             get
             {
                 return this.fileName;
-                
+
             }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.FileName));
                 }
 
                 this.fileName = value;
@@ -54,10 +56,11 @@ namespace EasyHttp.Infrastructure
             {
                 return this.contentType;
             }
-            set {
+            set
+            {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.ContentType));
                 }
 
                 this.contentType = value;
@@ -70,11 +73,12 @@ namespace EasyHttp.Infrastructure
             {
                 return this.contentTransferEncoding;
             }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(ReflectionUtility.PropertyName<FileData>(x => x.ContentTransferEncoding));
                 }
 
                 this.contentTransferEncoding = value;
