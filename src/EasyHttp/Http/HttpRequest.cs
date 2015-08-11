@@ -1,107 +1,146 @@
 ﻿#region License
 
-// Distributed under the BSD License
-//   
-// YouTrackSharp Copyright (c) 2010-2012, Hadi Hariri and Contributors
-// All rights reserved.
-//   
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//      * Redistributions of source code must retain the above copyright
-//         notice, this list of conditions and the following disclaimer.
-//      * Redistributions in binary form must reproduce the above copyright
-//         notice, this list of conditions and the following disclaimer in the
-//         documentation and/or other materials provided with the distribution.
-//      * Neither the name of Hadi Hariri nor the
-//         names of its contributors may be used to endorse or promote products
-//         derived from this software without specific prior written permission.
-//   
-//   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-//   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
-//   TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
-//   PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
-//   <COPYRIGHTHOLDER> BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-//   SPECIAL,EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//   LIMITED  TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-//   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND  ON ANY
-//   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-//   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
-//   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//   
+//// Distributed under the BSD License
+////   
+//// YouTrackSharp Copyright (c) 2010-2012, Hadi Hariri and Contributors
+//// All rights reserved.
+////   
+////  Redistribution and use in source and binary forms, with or without
+////  modification, are permitted provided that the following conditions are met:
+////      * Redistributions of source code must retain the above copyright
+////         notice, this list of conditions and the following disclaimer.
+////      * Redistributions in binary form must reproduce the above copyright
+////         notice, this list of conditions and the following disclaimer in the
+////         documentation and/or other materials provided with the distribution.
+////      * Neither the name of Hadi Hariri nor the
+////         names of its contributors may be used to endorse or promote products
+////         derived from this software without specific prior written permission.
+////   
+////   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+////   "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+////   TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
+////   PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL 
+////   <COPYRIGHTHOLDER> BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+////   SPECIAL,EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+////   LIMITED  TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+////   DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND  ON ANY
+////   THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+////   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+////   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Net;
-using System.Net.Cache;
-using System.Net.Security;
-using System.Reflection;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using EasyHttp.Codecs;
-using EasyHttp.Infrastructure;
-
 namespace EasyHttp.Http
 {
-    // TODO: This class needs cleaning up and abstracting the encoder one more level
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Net;
+    using System.Net.Cache;
+    using System.Net.Security;
+    using System.Reflection;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Text;
+
+    using EasyHttp.Codecs;
+    using EasyHttp.Infrastructure;
+
+    //// TODO: This class needs cleaning up and abstracting the encoder one more level
     public class HttpRequest
     {
         private readonly IEncoder encoder;
+
         private HttpRequestCachePolicy cachePolicy;
+
         private HttpWebRequest httpWebRequest;
+
         private CookieContainer cookieContainer;
 
         public HttpRequest(IEncoder encoder)
         {
             this.RawHeaders = new Dictionary<string, object>();
             this.ClientCertificates = new X509CertificateCollection();
-            this.UserAgent = string.Format("EasyHttp HttpClient v{0}",
-                                      Assembly.GetAssembly(typeof(HttpClient)).GetName().Version);
-
-            this.Accept = string.Join(";", HttpContentTypes.TextHtml, HttpContentTypes.ApplicationXml,
-                                 HttpContentTypes.ApplicationJson);
+            this.UserAgent = string.Format(
+                "EasyHttp HttpClient v{0}",
+                Assembly.GetAssembly(typeof(HttpClient)).GetName().Version);
+            this.Accept = HttpContentTypes.TextHtml;
+            //this.Accept = string.Join(";", HttpContentTypes.TextHtml,
+            //    HttpContentTypes.ApplicationXml,
+            //    HttpContentTypes.ApplicationJson);
 
             this.encoder = encoder;
-            this.Timeout = 100000; //http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.timeout.aspx
+            this.Timeout = 100000; ////http://msdn.microsoft.com/en-us/library/system.net.httpwebrequest.timeout.aspx
             this.AllowAutoRedirect = true;
         }
 
         public string Accept { get; set; }
+
         public string AcceptCharSet { get; set; }
+
         public string AcceptEncoding { get; set; }
+
         public string AcceptLanguage { get; set; }
+
         public bool KeepAlive { get; set; }
+
         public X509CertificateCollection ClientCertificates { get; set; }
+
         public string ContentLength { get; private set; }
+
         public string ContentType { get; set; }
+
         public string ContentEncoding { get; set; }
+
         public CookieCollection Cookies { get; set; }
+
         public DateTime Date { get; set; }
+
         public bool Expect { get; set; }
+
         public string From { get; set; }
+
         public string Host { get; set; }
+
         public string IfMatch { get; set; }
+
         public DateTime IfModifiedSince { get; set; }
+
         public string IfRange { get; set; }
+
         public int MaxForwards { get; set; }
+
         public string Referer { get; set; }
+
         public int Range { get; set; }
+
         public string UserAgent { get; set; }
+
         public IDictionary<string, object> RawHeaders { get; private set; }
+
         public HttpMethodType Method { get; set; }
+
         public object Data { get; set; }
+
         public string Uri { get; set; }
+
         public string PutFilename { get; set; }
+
         public IDictionary<string, object> MultiPartFormData { get; set; }
+
         public IList<FileData> MultiPartFileData { get; set; }
+
         public int Timeout { get; set; }
+
         public bool ParametersAsSegments { get; set; }
+
         public bool ForceBasicAuthentication { get; set; }
+
         public bool PersistCookies { get; set; }
+
         public bool AllowAutoRedirect { get; set; }
+
         public string Username { get; private set; }
+
         public string Password { get; private set; }
 
         public void SetBasicAuthentication(string username, string password)
@@ -188,7 +227,7 @@ namespace EasyHttp.Http
                 this.httpWebRequest.Date = this.Date;
             }
 
-            if (!String.IsNullOrEmpty(this.Host))
+            if (!string.IsNullOrEmpty(this.Host))
             {
                 this.httpWebRequest.Host = this.Host;
             }
@@ -213,12 +252,16 @@ namespace EasyHttp.Http
 
             foreach (var header in this.RawHeaders)
             {
-                this.httpWebRequest.Headers.Add(String.Format("{0}: {1}", header.Key, header.Value));
+                this.httpWebRequest.Headers.Add(string.Format("{0}: {1}", header.Key, header.Value));
             }
-
         }
-        //TODO или да се маха или да се вкара някаква логика
-        private bool AcceptAllCertifications(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+
+        ////TODO или да се маха или да се вкара някаква логика
+        private bool AcceptAllCertifications(
+            object sender,
+            X509Certificate certificate,
+            X509Chain chain,
+            SslPolicyErrors sslpolicyerrors)
         {
             return true;
         }
@@ -226,7 +269,9 @@ namespace EasyHttp.Http
         private void SetupClientCertificates()
         {
             if (this.ClientCertificates == null || this.ClientCertificates.Count == 0)
+            {
                 return;
+            }
 
             this.httpWebRequest.ClientCertificates.AddRange(this.ClientCertificates);
         }
@@ -257,7 +302,7 @@ namespace EasyHttp.Http
                 return;
             }
 
-            if (!String.IsNullOrEmpty(this.PutFilename))
+            if (!string.IsNullOrEmpty(this.PutFilename))
             {
                 this.SetupPutFilename();
                 return;
@@ -318,62 +363,5 @@ namespace EasyHttp.Http
 
             multiPartStreamer.StreamMultiPart(this.httpWebRequest.GetRequestStream());
         }
-
-
-        //public HttpWebRequest PrepareRequest()
-        //{
-        //    this.httpWebRequest = (HttpWebRequest)WebRequest.Create(this.Uri);
-        //    this.httpWebRequest.AllowAutoRedirect = this.AllowAutoRedirect;
-        //    this.SetupHeader();
-
-        //    this.SetupBody();
-
-        //    return this.httpWebRequest;
-        //}
-
-        //void SetupClientCertificates()
-        //{
-        //    if (this.ClientCertificates == null || this.ClientCertificates.Count == 0)
-        //        return;
-
-        //    this.httpWebRequest.ClientCertificates.AddRange(this.ClientCertificates);
-        //}
-
-        //void SetupAuthentication()
-        //{
-        //    this.SetupClientCertificates();
-
-        //    if (this.ForceBasicAuthentication)
-        //    {
-        //        string authInfo = this.Username + ":" + this.Password;
-        //        authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-        //        this.httpWebRequest.Headers["Authorization"] = "Basic " + authInfo;
-        //    }
-        //    else
-        //    {
-        //        var networkCredential = new NetworkCredential(this.Username, this.Password);
-        //        this.httpWebRequest.Credentials = networkCredential;
-        //    }
-        //}
-
-        //public void SetCacheControlToNoCache()
-        //{
-        //    this.cachePolicy = new HttpRequestCachePolicy(HttpRequestCacheLevel.NoCacheNoStore);
-        //}
-
-        //public void SetCacheControlWithMaxAge(TimeSpan maxAge)
-        //{
-        //    this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAge, maxAge);
-        //}
-
-        //public void SetCacheControlWithMaxAgeAndMaxStale(TimeSpan maxAge, TimeSpan maxStale)
-        //{
-        //    this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMaxStale, maxAge, maxStale);
-        //}
-
-        //public void SetCacheControlWithMaxAgeAndMinFresh(TimeSpan maxAge, TimeSpan minFresh)
-        //{
-        //    this.cachePolicy = new HttpRequestCachePolicy(HttpCacheAgeControl.MaxAgeAndMinFresh, maxAge, minFresh);
-        //}
     }
 }

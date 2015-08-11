@@ -100,7 +100,7 @@ namespace EasyHttp.Infrastructure
                 {
                     if (string.IsNullOrEmpty(value))
                     {
-                        throw new ArgumentNullException(nameof(value));
+                        throw new ArgumentNullException(typeof(ObjectsWithNameAndValue).GetProperty(this.Name).Name);
                     }
 
                     this.name = value;

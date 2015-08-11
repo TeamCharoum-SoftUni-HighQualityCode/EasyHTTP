@@ -210,7 +210,7 @@ namespace EasyHttp.Http
 
             this.Response = new HttpResponse(this.decoder);
 
-            this.Response.GetResponse(httpWebRequest, filename, this.StreamResponse);
+            this.Response.SetResponse(httpWebRequest, filename, this.StreamResponse);
 
             if (this.HasThrowExceptionOnHttpError && this.IsHttpError())
             {

@@ -23,7 +23,7 @@ namespace EasyHttp.Infrastructure
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.FieldName).Name);
                 }
 
                 this.fieldName = value;
@@ -35,13 +35,13 @@ namespace EasyHttp.Infrastructure
             get
             {
                 return this.fileName;
-                
+
             }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.FileName).Name);
                 }
 
                 this.fileName = value;
@@ -54,10 +54,11 @@ namespace EasyHttp.Infrastructure
             {
                 return this.contentType;
             }
-            set {
+            set
+            {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.ContentType).Name);
                 }
 
                 this.contentType = value;
@@ -70,11 +71,12 @@ namespace EasyHttp.Infrastructure
             {
                 return this.contentTransferEncoding;
             }
+
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(nameof(value));
+                    throw new ArgumentNullException(typeof(FileData).GetProperty(this.ContentTransferEncoding).Name);
                 }
 
                 this.contentTransferEncoding = value;
